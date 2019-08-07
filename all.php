@@ -1,15 +1,31 @@
 <?php
 /**
- * 首页
+ * 刷题
  * 业余无线电台操作技术能力模拟考试系统
  * Author: DT27 <https://dt27.org>
- * @2019-08-06 18:27:00
+ * @2019-08-07 08:13:50
  */
 
 include('import.php');
-
-$aQ = getAQ();
-$a = getExam("A");
+$type = empty($_REQUEST['type']) ? "A" : $_REQUEST['type'];
+switch ($type) {
+    case "A":
+        $qs = getAQ();
+        $qsNum = count($aQNum);
+        break;
+    case "B":
+        $qs = getBQ();
+        $qsNum = count($bQNum);
+        break;
+    case "C":
+        $qs = getCQ();
+        $qsNum = count($cQNum);
+        break;
+    default:
+        $qs = getAQ();
+        $qsNum = count($aQNum);
+        break;
+}
 ?>
 <!doctype html>
 <html lang="zh">
@@ -29,7 +45,7 @@ $a = getExam("A");
             margin-bottom: 0;
         }
     </style>
-    <title>业余无线电|业余无线电台操作技术能力模拟考试</title>
+    <title>刷题 - 业余无线电|业余无线电台操作技术能力模拟考试</title>
 </head>
 <body>
 <header>
@@ -42,10 +58,10 @@ $a = getExam("A");
             </button>
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <a class="nav-link" href="/">首页</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item active">
                         <a class="nav-link" href="/all.php">刷题</a>
                     </li>
                     <li class="nav-item">
@@ -67,10 +83,10 @@ $a = getExam("A");
                     <label class="input-group-text" for="qType">业余电台操作证书分类</label>
                 </div>
                 <select class="custom-select" id="qType" name="qType">
-                    <option selected>请选择...</option>
-                    <option value="A">A类<?php echo " " . count($aQNum) . "题"; ?></option>
-                    <option value="B">B类<?php echo " " . count($bQNum) . "题"; ?></option>
-                    <option value="C">C类<?php echo " " . count($cQNum) . "题"; ?></option>
+                    <option>请选择...</option>
+                    <option value="A"<?php echo $type=="A"?" selected":"";?>>A类<?php echo " " . count($aQNum) . "题"; ?></option>
+                    <option value="B"<?php echo $type=="B"?" selected":"";?>>B类<?php echo " " . count($bQNum) . "题"; ?></option>
+                    <option value="C"<?php echo $type=="C"?" selected":"";?>>C类<?php echo " " . count($cQNum) . "题"; ?></option>
                 </select>
             </div>
         </div>
@@ -82,55 +98,40 @@ $a = getExam("A");
         </div>
         <div class="row">
             <?php
-            foreach ($a as $k => $v) {
-                $q = $aQ[$v];
+
+            for ($i = 0; $i < $qsNum; $i++) {
+                $q = $qs[$i];
                 ?>
-                <div class="card mb-4 d-none" data-num="<?php echo $q['I'] ?>">
+                <div class="card mb-4 d-none" data-num="<?php echo $q['I'] ?>" style="min-width: 90%;">
                     <div class="card-body">
                         <p class="card-text">
-                            <span class="text-success mr-1"><?php echo $k + 1 . '/' . count($a); ?></span><?php
+                            <span class="text-success mr-1"><?php echo $i + 1 . '/' . $qsNum; ?></span><?php
                             echo $q['Q']
                             ?>
                         </p>
                     </div>
                     <div class="list-group list-group-flush">
                         <div class="list-group-item list-group-item-action form-check">
-                            <input class="form-check-input" type="radio" name="a-<?php echo $q['I'] ?>" id="a1-<?php echo $q['I'] ?>" value="option1"><label for="a1-<?php echo $q['I'] ?>"><?php echo $q['A'] ?></label>
+                            <input class="form-check-input" type="radio" name="a-<?php echo $q['I'] ?>" id="a1-<?php echo $q['I'] ?>" value="option1" checked disabled><label for="a1-<?php echo $q['I'] ?>"><?php echo $q['A'] ?></label>
                         </div>
 
                         <div class="list-group-item list-group-item-action form-check">
-                            <input class="form-check-input" type="radio" name="a-<?php echo $q['I'] ?>" id="a2-<?php echo $q['I'] ?>" value="option1"><label for="a2-<?php echo $q['I'] ?>"><?php echo $q['B'] ?></label>
+                            <input class="form-check-input" type="radio" name="a-<?php echo $q['I'] ?>" id="a2-<?php echo $q['I'] ?>" value="option1" disabled><label for="a2-<?php echo $q['I'] ?>"><?php echo $q['B'] ?></label>
                         </div>
 
                         <div class="list-group-item list-group-item-action form-check">
-                            <input class="form-check-input" type="radio" name="a-<?php echo $q['I'] ?>" id="a3-<?php echo $q['I'] ?>" value="option1"><label for="a3-<?php echo $q['I'] ?>"><?php echo $q['C'] ?></label>
+                            <input class="form-check-input" type="radio" name="a-<?php echo $q['I'] ?>" id="a3-<?php echo $q['I'] ?>" value="option1" disabled><label for="a3-<?php echo $q['I'] ?>"><?php echo $q['C'] ?></label>
                         </div>
 
                         <div class="list-group-item list-group-item-action form-check">
-                            <input class="form-check-input" type="radio" name="a-<?php echo $q['I'] ?>" id="a4-<?php echo $q['I'] ?>" value="option1"><label for="a4-<?php echo $q['I'] ?>"><?php echo $q['D'] ?></label>
+                            <input class="form-check-input" type="radio" name="a-<?php echo $q['I'] ?>" id="a4-<?php echo $q['I'] ?>" value="option1" disabled><label for="a4-<?php echo $q['I'] ?>"><?php echo $q['D'] ?></label>
                         </div>
                     </div>
-                    <div class="d-flex justify-content-between align-items-center m-3">
-                        <div class="btn-group">
-                            <button type="button" class="next btn btn-sm btn-outline-primary"<?php echo $k == 29 ? ' disabled' : ''; ?>>下一题</button>
-                            <button type="button" class="prev btn btn-sm btn-outline-primary"<?php echo $k == 0 ? ' disabled' : ''; ?>>上一题</button>
-                        </div>
-                        <small class="text-muted">
-                            <a class="" data-toggle="collapse" href="#collapse<?php echo $q['I']; ?>" role="button" aria-expanded="false" aria-controls="collapse<?php echo $q['I']; ?>"> 查看答案 </a>
-                        </small>
-
-                    </div>
-
-                    <div class="collapse m-3" id="collapse<?php echo $q['I']; ?>">
-                        A
-                    </div>
-
                 </div>
                 <?php
             }
             ?>
-
-
+            <ul id="pagination-demo" class="pagination-sm"></ul>
         </div>
     </div>
 </main>
@@ -151,32 +152,54 @@ $a = getExam("A");
 <script src="js/jquery.cookie.min.js"></script>
 <script src="js/popper.min.js"></script>
 <script src="js/bootstrap.js"></script>
+<script src="js/jquery.twbsPagination.min.js"></script>
 <script>
     $(function () {
-
-        $('#loading').hide();
-
-        $("div[data-num='<?php echo $aQ[$a[0]]["I"];?>']").removeClass("d-none");
-        $(".next").click(function () {
-            $(this).parents(".card").addClass("d-none").next(".card").removeClass("d-none");
-        })
-        $(".prev").click(function () {
-            $(this).parents(".card").addClass("d-none").prev(".card").removeClass("d-none");
-        })
-
-
-        var date1 = '2019-08-06 18:27:00';  //开始时间
+        var date1 = '2019-08-06 18:27:00';      //开始时间
         var date2 = new Date(); //结束时间
         var date3 = date2.getTime() - new Date(date1).getTime();    //时间差的毫秒数
         //计算出相差天数
-        var days = Math.floor(date3 / (24 * 3600 * 1000))
+        var days = Math.floor(date3 / (24 * 3600 * 1000));
         //计算出小时数
-        var leave1 = date3 % (24 * 3600 * 1000)    //计算天数后剩余的毫秒数
+        var leave1 = date3 % (24 * 3600 * 1000); //计算天数后剩余的毫秒数
         var hours = Math.floor(leave1 / (3600 * 1000))
         //计算相差分钟数
-        var leave2 = leave1 % (3600 * 1000)        //计算小时数后剩余的毫秒数
-        var minutes = Math.floor(leave2 / (60 * 1000))
+        var leave2 = leave1 % (3600 * 1000); //计算小时数后剩余的毫秒数
+        var minutes = Math.floor(leave2 / (60 * 1000));
         $("#runTime").text(days + "天 " + hours + "小时 " + minutes + " 分钟");
+    })
+
+
+    var pageNum = Math.ceil(<?php echo $qsNum;?> / 10
+    )
+    ;
+    /**
+     * 分页加载数据
+     */
+    $(function () {
+        $('#loading').hide();
+        $(".card[data-num]:lt(10)").removeClass("d-none");
+        $('#pagination-demo').twbsPagination({
+            totalPages: pageNum,
+            visiblePages: 5,
+            first:'<span aria-hidden="true">&laquo;</span>',
+            last:'<span aria-hidden="true">&raquo;</span>',
+            prev: '<span aria-hidden="true">&lt;</span>',
+            next: '<span aria-hidden="true">&gt;</span>',
+            onPageClick: function (event, page) {
+                $(".card[data-num]").addClass("d-none");
+                $(".card[data-num]:lt(" + page * 10 + ")" + (page == 1 ? "" : ":gt(" + (page * 10 - 10 - 1) + ")")).removeClass("d-none");
+            }
+        });
+    })
+
+    /**
+     * 切换分类
+     */
+    $(function () {
+        $('#qType').change(function () {
+            location.href="/all.php?type="+$(this).val();
+        })
     })
 </script>
 </body>

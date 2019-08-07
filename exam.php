@@ -1,9 +1,9 @@
 <?php
 /**
- * 首页
+ * 模拟考试
  * 业余无线电台操作技术能力模拟考试系统
  * Author: DT27 <https://dt27.org>
- * @2019-08-06 18:27:00
+ * @2019-08-07 09:33:30
  */
 
 include('import.php');
@@ -29,7 +29,7 @@ $a = getExam("A");
             margin-bottom: 0;
         }
     </style>
-    <title>业余无线电|业余无线电台操作技术能力模拟考试</title>
+    <title>模拟考试 - 业余无线电|业余无线电台操作技术能力模拟考试</title>
 </head>
 <body>
 <header>
@@ -42,13 +42,13 @@ $a = getExam("A");
             </button>
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <a class="nav-link" href="/">首页</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/all.php">刷题</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item active">
                         <a class="nav-link" href="/exam.php">模拟考试</a>
                     </li>
                 </ul>
@@ -115,7 +115,7 @@ $a = getExam("A");
                             <button type="button" class="next btn btn-sm btn-outline-primary"<?php echo $k == 29 ? ' disabled' : ''; ?>>下一题</button>
                             <button type="button" class="prev btn btn-sm btn-outline-primary"<?php echo $k == 0 ? ' disabled' : ''; ?>>上一题</button>
                         </div>
-                        <small class="text-muted">
+                        <small class="text-muted d-none">
                             <a class="" data-toggle="collapse" href="#collapse<?php echo $q['I']; ?>" role="button" aria-expanded="false" aria-controls="collapse<?php echo $q['I']; ?>"> 查看答案 </a>
                         </small>
 

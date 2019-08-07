@@ -2,8 +2,7 @@
 /**
  * 业余无线电台操作技术能力模拟考试系统
  * Author: DT27 <https://dt27.org>
- * Date: 2019/8/6
- * Time: 18:27
+ * @2019-08-06 18:27:00
  */
 
 /**
@@ -13,7 +12,6 @@ function del($var)
 {
     return (trim($var));
 }
-
 
 $allQ = getAllQ('source/总题库文件(v171031).txt');
 $aQNum = getAQNum('source/A_试卷涉及题号(v170717).txt');
@@ -165,6 +163,25 @@ function getCQ()
         }
     }
     return $cQ;
+}
+
+/**
+ * 随机获取30题
+ */
+function getExam($type){
+    $q = array();
+    switch ($type){
+        case "A":
+            $q = getAQ();
+            break;
+        case "B":
+            $q = getBQ();
+            break;
+        case "C":
+            $q = getCQ();
+            break;
+    }
+    return array_rand($q,30);
 }
 
 //print_r(getAQ());
