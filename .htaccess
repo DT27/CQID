@@ -1,0 +1,6 @@
+RewriteEngine on
+
+RewriteCond %{SERVER_PORT} 80
+RewriteRule ^(.*)$ https://www.cqid.cn/$1 [R=301,L]
+RewriteCond %{HTTP_HOST} ^cqid\.cn [NC]
+RewriteRule ^(.*) https://www.cqid.cn/$1 [R=301,L]

@@ -5,8 +5,11 @@
  * @2019-08-06 18:27:00
  */
 
+
 /**
  *数组去空值
+ * @param $var
+ * @return string
  */
 function del($var)
 {
@@ -20,6 +23,8 @@ $cQNum = getAQNum('source/C_试卷涉及题号(v170717).txt');
 
 /**
  *获取所有题库
+ * @param $allqfile
+ * @return array
  */
 function getAllQ($allqfile)
 {
@@ -60,6 +65,8 @@ function getAllQ($allqfile)
 
 /**
  *获取所有A类题库序号
+ * @param $aqfile
+ * @return array|string
  */
 function getAQNum($aqfile)
 {
@@ -78,6 +85,8 @@ function getAQNum($aqfile)
 
 /**
  *获取所有B类题库序号
+ * @param $bqfile
+ * @return array|string
  */
 function getBQNum($bqfile)
 {
@@ -96,6 +105,8 @@ function getBQNum($bqfile)
 
 /**
  *获取所有C类题库序号
+ * @param $cqfile
+ * @return array|string
  */
 function getCQNum($cqfile)
 {
@@ -124,10 +135,30 @@ function getAQ()
     for ($i = 0; $i < count($allQ); $i++) {
         if (in_array($allQ[$i]['I'], $aQNum)) {
             $aQ[$y] = $allQ[$i];
+            $aQ[$y]["index"] = $y;
             $y++;
         }
     }
     return $aQ;
+}
+
+/**
+ * 分页获取题库
+ * @param $pageSize
+ * @param $page
+ * @return array
+ */
+function getQSP($qs, $pageSize, $page)
+{
+    $count = count($qs);//总条数
+    $countpage = ceil($count / $pageSize); #总页面数
+    $start = ($page - 1) * $pageSize;//偏移量，当前页-1乘以每页显示条数
+    if ($page < $countpage) {
+        $qsP = array_slice($qs, $start, $pageSize);
+    } else {
+        $qsP = array_slice($qs, $start);
+    }
+    return $qsP;
 }
 
 
@@ -168,9 +199,10 @@ function getCQ()
 /**
  * 随机获取30题
  */
-function getExam($type){
+function getExam($type)
+{
     $q = array();
-    switch ($type){
+    switch ($type) {
         case "A":
             $q = getAQ();
             break;
@@ -181,7 +213,7 @@ function getExam($type){
             $q = getCQ();
             break;
     }
-    return array_rand($q,30);
+    return array_rand($q, 30);
 }
 
 //print_r(getAQ());
