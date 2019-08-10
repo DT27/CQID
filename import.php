@@ -173,6 +173,7 @@ function getBQ()
     for ($i = 0; $i < count($allQ); $i++) {
         if (in_array($allQ[$i]['I'], $bQNum)) {
             $bQ[$y] = $allQ[$i];
+            $bQ[$y]["index"] = $y;
             $y++;
         }
     }
@@ -190,6 +191,7 @@ function getCQ()
     for ($i = 0; $i < count($allQ); $i++) {
         if (in_array($allQ[$i]['I'], $cQNum)) {
             $cQ[$y] = $allQ[$i];
+            $cQ[$y]["index"] = $y;
             $y++;
         }
     }

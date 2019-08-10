@@ -6,13 +6,18 @@
  * @2019-08-09 17:47:00
  */
 ?>
-<footer class="text-muted">
+
+<hr>
+<footer class="text-muted py-4 lh-1 bg-white">
     <div class="container">
-        <p class="float-right text-right">
+        <div class="row">
+        <div class="col-md">最新题库版本：<a href="http://www.crac.org.cn/?page_id=4274" target="_blank">v171031</a></div>
+        <div class="col-md text-md-right">
+            业余无线电台操作技术能力模拟考试平台
+        </div>
+        </div>
+        <div class="text-center mt-3">
             © <a href="https://dt27.org" target="_blank">DT27</a><br>
-        </p>
-        <p>最新题库版本：<a href="http://www.crac.org.cn/?page_id=4274" target="_blank">v171031</a></p>
-        <div class="text-center mb-1">
             <small>已运行：<span id="runTime"></span></small>
         </div>
     </div>
