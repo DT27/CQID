@@ -37,11 +37,10 @@
         $(".prev").click(function () {
             $(this).parents(".card").addClass("d-none").prev(".card").removeClass("d-none");
         })
+        
 
 
-
-
-
+        //计算网站运行时间
         var date1 = '2019-08-06 18:27:00';  //开始时间
         var date2 = new Date(); //结束时间
         var date3 = date2.getTime() - new Date(date1).getTime();    //时间差的毫秒数
@@ -55,4 +54,15 @@
         var minutes = Math.floor(leave2 / (60 * 1000))
         $("#runTime").text(days + "天 " + hours + "小时 " + minutes + " 分钟");
     })
-</script></body></html>
+</script>
+<script>
+    //百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?27be6da16dc60408e058a828f67ef85b";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+</body></html>
