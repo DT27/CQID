@@ -57,7 +57,6 @@ function getAllQ($allqfile)
             }
         }
         fclose($file);
-        //数		去空
     }
     return $content;
 }
@@ -136,6 +135,14 @@ function getAQ()
         if (in_array($allQ[$i]['I'], $aQNum)) {
             $aQ[$y] = $allQ[$i];
             $aQ[$y]["index"] = $y;
+            $answer = array(
+                array("k" => "A", "v" => $allQ[$i]["A"]),
+                array("k" => "B", "v" => $allQ[$i]["B"]),
+                array("k" => "C", "v" => $allQ[$i]["C"]),
+                array("k" => "D", "v" => $allQ[$i]["D"]),
+            );
+            shuffle($answer);
+            $aQ[$y]["answer"] = $answer;
             $y++;
         }
     }
@@ -174,6 +181,14 @@ function getBQ()
         if (in_array($allQ[$i]['I'], $bQNum)) {
             $bQ[$y] = $allQ[$i];
             $bQ[$y]["index"] = $y;
+            $answer = array(
+                array("k" => "A", "v" => $allQ[$i]["A"]),
+                array("k" => "B", "v" => $allQ[$i]["B"]),
+                array("k" => "C", "v" => $allQ[$i]["C"]),
+                array("k" => "D", "v" => $allQ[$i]["D"]),
+            );
+            shuffle($answer);
+            $bQ[$y]["answer"] = $answer;
             $y++;
         }
     }
@@ -192,6 +207,14 @@ function getCQ()
         if (in_array($allQ[$i]['I'], $cQNum)) {
             $cQ[$y] = $allQ[$i];
             $cQ[$y]["index"] = $y;
+            $answer = array(
+                array("k" => "A", "v" => $allQ[$i]["A"]),
+                array("k" => "B", "v" => $allQ[$i]["B"]),
+                array("k" => "C", "v" => $allQ[$i]["C"]),
+                array("k" => "D", "v" => $allQ[$i]["D"]),
+            );
+            shuffle($answer);
+            $cQ[$y]["answer"] = $answer;
             $y++;
         }
     }
@@ -215,7 +238,9 @@ function getExam($type)
             $q = getCQ();
             break;
     }
-    return array_rand($q, 30);
+    $QSR = array_rand($q, 30);
+    shuffle($QSR);
+    return $QSR;
 }
 
 //print_r(getAQ());

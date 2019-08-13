@@ -6,8 +6,6 @@
  * @2019-08-09 17:47:00
  */
 ?>
-
-<hr>
 <footer class="text-muted py-4 lh-1 bg-white">
     <div class="container">
         <div class="row">
@@ -27,17 +25,6 @@
 <script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 <script>
     $(function () {
-
-        $('#loading').hide();
-
-        $("div[data-num='<?php echo $aQ[$a[0]]["I"];?>']").removeClass("d-none");
-        $(".next").click(function () {
-            $(this).parents(".card").addClass("d-none").next(".card").removeClass("d-none");
-        })
-        $(".prev").click(function () {
-            $(this).parents(".card").addClass("d-none").prev(".card").removeClass("d-none");
-        })
-        
 
 
         //计算网站运行时间

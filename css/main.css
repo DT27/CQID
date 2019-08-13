@@ -82,3 +82,8 @@ a:hover {
 .form-check label {
     margin-bottom: 0;
 }
+.info{
+    text-indent: 2em;
+    font-size: 1.2rem;
+    font-weight: 400;
+}

@@ -5,23 +5,22 @@
  * Author: DT27 <https://dt27.org>
  * @2019-08-09 17:47:00
  */
-$aQ = getAQ();
-$a = getExam("A");
 ?>
 <!doctype html>
 <html lang="zh">
 <head>
     <meta charset="utf-8">
+    <meta name="theme-color" content="#1283DA">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title><?php echo $title ? $title . " - " : ""; ?>业余无线电|业余电台操作证书模拟考试</title>
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/main.css">
-    <script src="https://cdn.staticfile.org/jquery/3.4.1/jquery.slim.min.js"></script>
+    <script src="https://cdn.staticfile.org/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/twbs-pagination/1.4.2/jquery.twbsPagination.min.js"></script>
 </head>
 <body>
 <header>
-    <nav class="navbar navbar-md navbar-expand-md navbar-dark<?php echo $title=="" ? " navbar-absolute navbar-transparant w-100" : " bg-primary"; ?>">
+    <nav class="navbar navbar-md navbar-expand-md navbar-dark<?php echo $title=="" ? " navbar-absolute navbar-transparant w-100" : " bg-primary"; ?><?php if($title == "") echo " d-none d-md-block"; ?>">
         <div class="container">
             <a href="/" class="navbar-brand d-flex align-items-center"> CQID</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">

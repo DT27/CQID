@@ -27,8 +27,8 @@ switch ($type) {
         $qsNum = count($cQNum);
         break;
     default:
-        $cQS = getCQ();
-        $qs = getQSP($cQS, $pageSize, $page);
+        $aQS = getAQ();
+        $qs = getQSP($aQS, $pageSize, $page);
         $qsNum = count($aQNum);
         break;
 }
@@ -65,27 +65,23 @@ include("inc/header.php");
                     <div class="card mb-4 d-none" data-num="<?php echo $q['I'] ?>" style="min-width: 90%;">
                         <div class="card-body">
                             <p class="card-text">
-                                <span class="text-success mr-1"><?php echo $q['index']+1 . '/' . $qsNum; ?></span><?php
+                                <span class="text-success mr-1"><?php echo $q['index'] + 1 . '/' . $qsNum; ?></span><?php
                                 echo $q['Q']
                                 ?>
                             </p>
                         </div>
                         <div class="list-group list-group-flush">
-                            <div class="list-group-item list-group-item-action form-check">
-                                <input class="form-check-input" type="radio" name="a-<?php echo $q['I'] ?>" id="a1-<?php echo $q['I'] ?>" value="option1" checked disabled><label for="a1-<?php echo $q['I'] ?>"><?php echo $q['A'] ?></label>
-                            </div>
+                            <?php
 
-                            <div class="list-group-item list-group-item-action form-check">
-                                <input class="form-check-input" type="radio" name="a-<?php echo $q['I'] ?>" id="a2-<?php echo $q['I'] ?>" value="option1" disabled><label for="a2-<?php echo $q['I'] ?>"><?php echo $q['B'] ?></label>
-                            </div>
-
-                            <div class="list-group-item list-group-item-action form-check">
-                                <input class="form-check-input" type="radio" name="a-<?php echo $q['I'] ?>" id="a3-<?php echo $q['I'] ?>" value="option1" disabled><label for="a3-<?php echo $q['I'] ?>"><?php echo $q['C'] ?></label>
-                            </div>
-
-                            <div class="list-group-item list-group-item-action form-check">
-                                <input class="form-check-input" type="radio" name="a-<?php echo $q['I'] ?>" id="a4-<?php echo $q['I'] ?>" value="option1" disabled><label for="a4-<?php echo $q['I'] ?>"><?php echo $q['D'] ?></label>
-                            </div>
+                            foreach ($q["answer"] as $a) {
+                                //print_r($a);
+                                ?>
+                                <div class="list-group-item list-group-item-action form-check">
+                                    <input class="form-check-input" type="radio" name="a-<?php echo $q['I'] ?>" id="a-<?php echo $q['I'] ?>-<?php echo $a["k"] ?>" value="option1" disabled<?php echo $a["k"] == "A" ? " checked" : ""; ?>><label for="a-<?php echo $q['I'] ?>-<?php echo $a["k"] ?>"><?php echo $a['v'] ?></label>
+                                </div>
+                                <?php
+                            }
+                            ?>
                         </div>
                     </div>
                     <?php
