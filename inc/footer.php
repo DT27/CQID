@@ -15,8 +15,9 @@
         </div>
         </div>
         <div class="text-center mt-3">
-            © <a href="https://dt27.org" target="_blank">DT27</a><br>
-            <small>已运行：<span id="runTime"></span></small>
+            <small>已运行：<span id="runTime"></span></small><br>
+            © <a href="https://dt27.org" target="_blank">DT27</a>
+            <a href="https://github.com/DT27/CQID/issues" target="_blank" class="ml-3"><small>Bug反馈</small></a>
         </div>
     </div>
 </footer>

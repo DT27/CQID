@@ -74,14 +74,14 @@ include("inc/header.php");
                             <button type="button" class="next btn btn-sm btn-outline-primary">下一题</button>
                             <button type="button" class="prev btn btn-sm btn-outline-primary">上一题</button>
                         </div>
-                        <small class="text-muted d-none">
-                            <a class="" data-toggle="collapse" href="#collapse" role="button" aria-expanded="false" aria-controls="collapse"> 查看答案 </a>
+                        <small class="text-muted">
+                            <a class="" data-toggle="collapse" href="#colA" role="button" aria-expanded="false" aria-controls="collapse"> 查看答案 </a>
                         </small>
 
                     </div>
 
-                    <div class="collapse m-3" id="collapse">
-                        A
+                    <div class="collapse m-3 alert alert-success" id="colA">
+
                     </div>
 
                 </div>
@@ -136,6 +136,8 @@ include("inc/header.php");
                 location.href = "?type=" + $(this).val();
             })
             $('.next').click(function () {
+                $("#colA").collapse('hide');
+                $("#colA").addClass("d-none");
                 var qs = localStorage.getItem("qs" + type);
                 var qsArray = JSON.parse(qs);
 
@@ -154,9 +156,13 @@ include("inc/header.php");
                     $(".prev").removeAttr("disabled");
                 }
 
+
             })
 
             $('.prev').click(function () {
+
+                $("#colA").collapse('hide');
+                $("#colA").addClass("d-none");
                 var qs = localStorage.getItem("qs" + type);
                 var qsArray = JSON.parse(qs);
 
@@ -185,6 +191,9 @@ include("inc/header.php");
             function generateAList(as) {
                 $("#q").html('<span class="text-success mr-1">' + (as["index"] + 1) + '/30</span>' + as.Q);
                 $('#a-list').empty();
+                var y = 0;
+                var x = ["A","B","C","D"];
+
                 for (var key in as["answer"]) {
                     var answer = as["answer"][key];
                     var userA = as["userA"];
@@ -195,10 +204,18 @@ include("inc/header.php");
                     if (userA == answer["k"]) {
                         html += " checked";
                     }
-                    html += '><label class="w-100" for="' + answer["k"] + '">' + answer["v"] + '</label></div>';
+                    html += '><label class="w-100" for="' + answer["k"] + '">' + x[y] + " " + answer["v"] + '</label></div>';
 
                     $('#a-list').append(html);
+
+                    if(answer["k"]=="A"){
+                        as["answer"]["right"] = x[y];
+                    }
+                    y++;
                 }
+
+                $("#colA").text(as["answer"]["right"]+" "+as["A"]);
+                //console.log(x);
             }
 
             $(".card").on("click", ".form-check-input", function () {
@@ -222,6 +239,10 @@ include("inc/header.php");
                 }
                 alert("答对题目数："+y+"\n答对25道题及格");
 
+            })
+
+            $("[data-toggle=collapse]").click(function () {
+                $("#colA").removeClass("d-none");
             })
 
         })
