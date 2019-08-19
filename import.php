@@ -222,7 +222,7 @@ function getCQ()
 }
 
 /**
- * 随机获取30题
+ * 随机获取试题
  */
 function getExam($type)
 {
@@ -230,15 +230,18 @@ function getExam($type)
     switch ($type) {
         case "A":
             $q = getAQ();
+            $QSR = array_rand($q, 30);
             break;
         case "B":
             $q = getBQ();
+            $QSR = array_rand($q, 50);
             break;
         case "C":
             $q = getCQ();
+            $QSR = array_rand($q, 80);
             break;
     }
-    $QSR = array_rand($q, 30);
+
     shuffle($QSR);
     return $QSR;
 }

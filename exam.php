@@ -71,8 +71,8 @@ include("inc/header.php");
                     </div>
                     <div class="d-flex justify-content-between align-items-center m-3">
                         <div class="btn-group">
-                            <button type="button" class="next btn btn-sm btn-outline-primary">下一题</button>
                             <button type="button" class="prev btn btn-sm btn-outline-primary">上一题</button>
+                            <button type="button" class="next btn btn-sm btn-outline-primary">下一题</button>
                         </div>
                         <small class="text-muted">
                             <a class="" data-toggle="collapse" href="#colA" role="button" aria-expanded="false" aria-controls="collapse"> 查看答案 </a>
@@ -97,14 +97,14 @@ include("inc/header.php");
 
             var qIndex = 0;
             $(".prev").attr("disabled", "disabled")
-            var type = "<?php echo $type;?>";
+            var type = $("#qType").val();
             var qs = localStorage.getItem("qs" + type);
             if (qs == null) {
                 $.ajax({
                     type: "POST",
-                    contentType: "application/json;charset=UTF-8",
+                    contentType: "application/x-www-form-urlencoded;charset=UTF-8",
                     url: "getExam.php",
-                    data: {'type': "A"},
+                    data: {type: type},
                     success: function (result) {
                         qs = JSON.parse(result);
                         localStorage.setItem("qs" + type, result);
@@ -124,7 +124,6 @@ include("inc/header.php");
                 generateAList(qs[0]);
                 $('#loading').hide();
                 $('.card').removeClass("d-none");
-                //console.log(qs);
             }
             /**
              * 切换分类
@@ -145,13 +144,13 @@ include("inc/header.php");
 
 
                 qIndex++;
-                if (qIndex > 0 && qIndex < 29) {
+                if (qIndex > 0 && qIndex < count(qsArray) - 1) {
                     $(".prev").removeAttr("disabled");
                     $(".next").removeAttr("disabled");
                 } else if (qIndex == 0) {
                     $(".prev").attr("disabled", "disabled");
                     $(".next").removeAttr("disabled");
-                } else if (qIndex == 29) {
+                } else if (qIndex == count(qsArray) - 1) {
                     $(".next").attr("disabled", "disabled");
                     $(".prev").removeAttr("disabled");
                 }
@@ -170,13 +169,13 @@ include("inc/header.php");
 
 
                 qIndex--;
-                if (qIndex > 0 && qIndex < 30) {
+                if (qIndex > 0 && qIndex < count(qsArray)) {
                     $(".prev").removeAttr("disabled");
                     $(".next").removeAttr("disabled");
                 } else if (qIndex == 0) {
                     $(".prev").attr("disabled", "disabled");
                     $(".next").removeAttr("disabled");
-                } else if (qIndex == 29) {
+                } else if (qIndex == count(qsArray) - 1) {
                     $(".next").attr("disabled", "disabled");
                     $(".prev").removeAttr("disabled");
                 }
@@ -187,35 +186,52 @@ include("inc/header.php");
                 window.location.reload();
             })
 
+            function count(o) {
+                var t = typeof o;
+                if (t == 'string') {
+                    return o.length;
+                } else if (t == 'object') {
+                    var n = 0;
+                    for (var i in o) {
+                        n++;
+                    }
+                    return n;
+                }
+                return false;
+            }
 
             function generateAList(as) {
-                $("#q").html('<span class="text-success mr-1">' + (as["index"] + 1) + '/30</span>' + as.Q);
+                var qs = JSON.parse(localStorage.getItem("qs" + type));
+                var qHtml = '<span class="text-success mr-1">' + (as["index"] + 1) + '/' + count(qs) + '</span>' + as.Q;
+                if (as.P) {
+                    qHtml += "<div><img class='img-thumbnail' style='max-width:20rem;' src='./source/总题库附图(v140331)/" + as.P + "'></div>";
+                }
+
+                $("#q").html(qHtml);
+
                 $('#a-list').empty();
                 var y = 0;
-                var x = ["A","B","C","D"];
+                var x = ["A", "B", "C", "D"];
 
                 for (var key in as["answer"]) {
                     var answer = as["answer"][key];
                     var userA = as["userA"];
 
-                    //console.log(userA);
-
                     var html = '<div class="list-group-item list-group-item-action form-check"><input class="form-check-input" type="radio" id="' + answer["k"] + '" name="' + as.I + '" value="' + answer["k"] + '"';
                     if (userA == answer["k"]) {
                         html += " checked";
                     }
-                    html += '><label class="w-100" for="' + answer["k"] + '">' + x[y] + " " + answer["v"] + '</label></div>';
+                    html += '><label class="w-100" for="' + answer["k"] + '"><span class="badge badge-light">' + x[y] + "</span> " + answer["v"] + '</label></div>';
 
                     $('#a-list').append(html);
 
-                    if(answer["k"]=="A"){
+                    if (answer["k"] == "A") {
                         as["answer"]["right"] = x[y];
                     }
                     y++;
                 }
 
-                $("#colA").text(as["answer"]["right"]+" "+as["A"]);
-                //console.log(x);
+                $("#colA").html('<span class="badge badge-light">' + as["answer"]["right"] + "</span> " + as["A"]);
             }
 
             $(".card").on("click", ".form-check-input", function () {
@@ -233,12 +249,11 @@ include("inc/header.php");
                 var qsArr = JSON.parse(qs);
                 var y = 0;
                 for (var i = 0; i < qsArr.length; i++) {
-                    if(qsArr[i].userA=="A"){
+                    if (qsArr[i].userA == "A") {
                         y++;
                     }
                 }
-                alert("答对题目数："+y+"\n答对25道题及格");
-
+                alert("答对题目数：" + y + "\n");
             })
 
             $("[data-toggle=collapse]").click(function () {

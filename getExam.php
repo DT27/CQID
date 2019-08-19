@@ -1,13 +1,13 @@
 <?php
 /**
- * Created by PhpStorm.
+ *
  * User: DT27
  * Date: 2019/8/12
  * Time: 22:24
  */
 require_once('import.php');
 
-$type = empty($_REQUEST['type']) ? "A" : $_REQUEST['type'];
+$type = !empty($_REQUEST['type']) ? $_REQUEST['type'] : "A";
 
 $qs = getExam($type);
 switch ($type) {
@@ -20,13 +20,10 @@ switch ($type) {
     case "C":
         $allQ = getCQ();
         break;
-    default:
-        $allQ = getAQ();
-        break;
 }
 $q = array();
 $i = 0;
-foreach ($qs as $k => $v){
+foreach ($qs as $k => $v) {
     $q[$i] = $allQ[$v];
     $q[$i]["index"] = $i;
     $i++;

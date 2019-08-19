@@ -58,7 +58,6 @@ include("inc/header.php");
             </div>
             <div class="row">
                 <?php
-
                 for ($i = 0; $i < count($qs); $i++) {
                     $q = $qs[$i];
                     ?>
@@ -66,20 +65,26 @@ include("inc/header.php");
                         <div class="card-body">
                             <p class="card-text">
                                 <span class="text-success mr-1"><?php echo $q['index'] + 1 . '/' . $qsNum; ?></span><?php
-                                echo $q['Q']
+                                echo $q['Q'];
+                                if (isset($q["P"])) {
+                                    echo "<div><img class='img-thumbnail' style='max-width:20rem;' src='./source/总题库附图(v140331)/" . $q["P"] . "'></div>";
+                                }
                                 ?>
                             </p>
                         </div>
                         <div class="list-group list-group-flush">
                             <?php
 
+                            $x = ["A", "B", "C", "D"];
+                            $y = 0;
                             foreach ($q["answer"] as $a) {
                                 //print_r($a);
                                 ?>
                                 <div class="list-group-item list-group-item-action form-check">
-                                    <input class="form-check-input" type="radio" name="a-<?php echo $q['I'] ?>" id="a-<?php echo $q['I'] ?>-<?php echo $a["k"] ?>" value="option1" disabled<?php echo $a["k"] == "A" ? " checked" : ""; ?>><label for="a-<?php echo $q['I'] ?>-<?php echo $a["k"] ?>"><?php echo $a['v'] ?></label>
+                                    <input class="form-check-input" type="radio" name="a-<?php echo $q['I'] ?>" id="a-<?php echo $q['I'] ?>-<?php echo $a["k"] ?>" value="option1" disabled<?php echo $a["k"] == "A" ? " checked" : ""; ?>><label for="a-<?php echo $q['I'] ?>-<?php echo $a["k"] ?>"><?php echo '<span class="badge badge-light">'.$x[$y] . "</span> " . $a['v'] ?></label>
                                 </div>
                                 <?php
+                                $y++;
                             }
                             ?>
                         </div>
