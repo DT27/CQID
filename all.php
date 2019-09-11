@@ -80,8 +80,8 @@ include("inc/header.php");
                             foreach ($q["answer"] as $a) {
                                 //print_r($a);
                                 ?>
-                                <div class="list-group-item list-group-item-action form-check">
-                                    <input class="form-check-input" type="radio" name="a-<?php echo $q['I'] ?>" id="a-<?php echo $q['I'] ?>-<?php echo $a["k"] ?>" value="option1" disabled<?php echo $a["k"] == "A" ? " checked" : ""; ?>><label for="a-<?php echo $q['I'] ?>-<?php echo $a["k"] ?>"><?php echo '<span class="badge badge-light">'.$x[$y] . "</span> " . $a['v'] ?></label>
+                                <div class="list-group-item list-group-item-action form-check btn-group-toggle">
+                                    <label for="a-<?php echo $q['I'] ?>-<?php echo $a["k"] ?>" class="btn w-100 text-left"><input class="form-check-input" type="radio" name="a-<?php echo $q['I'] ?>" id="a-<?php echo $q['I'] ?>-<?php echo $a["k"] ?>" value="<?php echo $a["k"];?>" data-check="<?php echo $a["k"] == "A" ? "1" : "0"; ?>"><?php echo '<span class="badge badge-light">'.$x[$y] . "</span> " . $a['v'] ?></label>
                                 </div>
                                 <?php
                                 $y++;
@@ -97,9 +97,7 @@ include("inc/header.php");
         </div>
     </main>
     <script>
-        var pageNum = Math.ceil(<?php echo $qsNum;?> / 10
-        )
-        ;
+        var pageNum = Math.ceil(<?php echo $qsNum;?> / 10);
         /**
          * 分页加载数据
          */
@@ -128,6 +126,29 @@ include("inc/header.php");
             $('#qType').change(function () {
                 location.href = "/all.php?type=" + $(this).val();
             })
+        })
+
+        $(function () {
+            $(".form-check-input").on("click", function () {
+                var a = $(this).val();
+                console.log(a);
+                if(a=="A"){
+                    $(this).parent("label").addClass("text-success");
+                    $(this).parent("label").children("span").addClass("wrong");
+                    console.log($(this).attr("name"));
+                }else{
+                    $(this).parent("label").addClass("text-danger");
+                    $("[for='"+$(this).attr("name")+"-A']").addClass("text-success");
+                    $("[for='"+$(this).attr("name")+"-A']").children("span").addClass("right");
+                }
+                $("[name='"+$(this).attr("name")+"']").attr("disabled",true);
+                //var qs = localStorage.getItem("qs" + type);
+                //var qsArr = JSON.parse(qs);
+                //qsArr[qIndex]["userA"] = $("input:radio:checked").val();
+                //localStorage.setItem("qs" + type, JSON.stringify(qsArr));
+
+            })
+
         })
     </script>
 <?php require_once('inc/footer.php'); ?>

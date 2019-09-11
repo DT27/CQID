@@ -30,7 +30,7 @@ include("inc/header.php");
     </div>
     <main class="main">
         <div class="container bg-white p-3">
-            <p style="text-indent: 2em;">业余无线电台操作技术能力的验证考核通过闭卷考试等形式进行。验证合格证明为《中国无线电协会业余电台操作证书》，由中国无线电协会统一印制和编号。</p>
+            <p style="text-indent: 2em;margin-top:2rem;">业余无线电台操作技术能力的验证考核通过闭卷考试等形式进行。验证合格证明为《中国无线电协会业余电台操作证书》，由中国无线电协会统一印制和编号。</p>
         </div>
         <div class="bg-light">
 
@@ -44,6 +44,7 @@ include("inc/header.php");
                                 <small><?php echo " " . count($aQNum) . "题"; ?></small>
                             </h5>
                             <p style="text-indent: 2em;">申请人初次申请业余无线电台操作技术能力考核，须首先参加 A 类业余无线电台操作技术能力考试。</p>
+                            <p style="text-indent: 2em;">A类操作技术能力考试试卷共30题，答题时间不超过40分钟，答对25题（含）以上为合格。</p>
                             <div class="text-right"><a class="" href="./all.php?type=A">查看题库 »</a></div>
                         </div>
                     </div>
@@ -53,6 +54,7 @@ include("inc/header.php");
                                 <small><?php echo " " . count($bQNum) . "题"; ?></small>
                             </h5>
                             <p style="text-indent: 2em;">取得 A 类《操作证书》六个月后可以申请参加 B 类操作技术能力考试。</p>
+                            <p style="text-indent: 2em;">B类操作技术能力考试试卷共50题，答题时间不超过60分钟，答对40题（含）以上为合格。</p>
                             <div class="text-right"><a class="" href="./all.php?type=B">查看题库 »</a></div>
                         </div>
                     </div>
@@ -62,6 +64,7 @@ include("inc/header.php");
                                 <small><?php echo " " . count($cQNum) . "题"; ?></small>
                             </h5>
                             <p style="text-indent: 2em;">取得 B 类《操作证书》并且设置 B 类业余无线电台二年后，可以申请参加 C 类操作技术能力考试。</p>
+                            <p style="text-indent: 2em;">C类操作技术能力考试试卷共80题，答题时间不超过90分钟，答对60题（含）以上为合格。</p>
                             <div class="text-right"><a class="" href="./all.php?type=C">查看题库 »</a></div>
                         </div>
                     </div>

@@ -13,6 +13,8 @@
     <meta name="theme-color" content="#1283DA">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title><?php echo $title ? $title . " - " : ""; ?>业余无线电|业余电台操作证书模拟考试</title>
+    <meta name="description" content="业余无线电台操作证书模拟考试" />
+    <meta name="keywords" content="业余无线电,业余电台,业余无线电模拟考试,业余无线电证书,业余无线电台操作证书" />
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/main.css">
     <script src="https://cdn.staticfile.org/jquery/3.3.1/jquery.min.js"></script>

@@ -253,7 +253,23 @@ include("inc/header.php");
                         y++;
                     }
                 }
-                alert("答对题目数：" + y + "\n");
+                var aQNum = 0;
+                switch($('#qType').val()){
+                    case "A":
+                        aQNum = 25;
+                        break;
+                    case "B":
+                        aQNum = 40;
+                        break;
+                    case "C":
+                        aQNum = 60;
+                        break;
+                }
+                if(y<aQNum){
+                    alert("答对题目数：" + y + "\n本次考试不合格。");
+                }else{
+                    alert("恭喜！\n答对题目数：" + y + "\n本次考试成绩合格。");
+                }
             })
 
             $("[data-toggle=collapse]").click(function () {

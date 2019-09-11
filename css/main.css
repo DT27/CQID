@@ -90,3 +90,21 @@ a:hover {
 .collapsing {
     transition: none !important;
 }
+label.text-danger:before {
+    background-size: cover;
+    width: 24px;
+    background-image: url("../images/icon-wrong.svg");
+    content: "";
+    height: 24px;
+    display: inline-block;
+    vertical-align: middle;
+}
+label.text-success:before {
+    background-size: cover;
+    width: 24px;
+    background-image: url("../images/icon-right.svg");
+    content: "";
+    height: 24px;
+    display: inline-block;
+    vertical-align: middle;
+}

@@ -16,8 +16,8 @@
         </div>
         <div class="text-center mt-3">
             <small>已运行：<span id="runTime"></span></small><br>
-            © <a href="https://dt27.org" target="_blank">DT27</a>
-            <a href="https://github.com/DT27/CQID/issues" target="_blank" class="ml-3"><small>Bug反馈</small></a>
+            京ICP备13024502号-7 © <a href="https://dt27.org" target="_blank">DT27</a>
+            <a href="https://github.com/DT27/CQID/issues" target="_blank" class="ml-3"><small>意见/反馈</small></a>
         </div>
     </div>
 </footer>
@@ -26,8 +26,6 @@
 <script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 <script>
     $(function () {
-
-
         //计算网站运行时间
         var date1 = '2019-08-06 18:27:00';  //开始时间
         var date2 = new Date(); //结束时间
