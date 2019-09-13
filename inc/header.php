@@ -22,7 +22,7 @@
 </head>
 <body>
 <header>
-    <nav class="navbar navbar-md navbar-expand-md navbar-dark<?php echo $title=="" ? " navbar-absolute navbar-transparant w-100" : " bg-primary"; ?><?php if($title == "") echo " d-none d-md-block"; ?>">
+    <nav class="navbar navbar-md navbar-expand-md navbar-dark<?php echo $title==""||$title=="注册"||$title=="登录" ? " navbar-absolute navbar-transparant w-100" : " bg-primary"; ?><?php if($title == "") echo " d-none d-md-block"; ?>">
         <div class="container">
             <a href="/" class="navbar-brand d-flex align-items-center"> CQID</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,10 +34,10 @@
                         <a class="nav-link" href="/">首页</a>
                     </li>
                     <li class="nav-item<?php echo $title == "刷题" ? " active" : ""; ?>">
-                        <a class="nav-link" href="/all.php">刷题</a>
+                        <a class="nav-link" href="/all/">刷题</a>
                     </li>
                     <li class="nav-item<?php echo $title == "模拟考试" ? " active" : ""; ?>">
-                        <a class="nav-link" href="/exam.php">模拟考试</a>
+                        <a class="nav-link" href="/exam/">模拟考试</a>
                     </li>
                 </ul>
                 <span class="navbar-text"><small>业余无线电台操作技术能力模拟考试平台</small></span>

@@ -91,6 +91,8 @@ a:hover {
     transition: none !important;
 }
 label.text-danger:before {
+    float: left;
+    margin-left: -24px;
     background-size: cover;
     width: 24px;
     background-image: url("../images/icon-wrong.svg");
@@ -100,6 +102,8 @@ label.text-danger:before {
     vertical-align: middle;
 }
 label.text-success:before {
+    float: left;
+    margin-left: -24px;
     background-size: cover;
     width: 24px;
     background-image: url("../images/icon-right.svg");

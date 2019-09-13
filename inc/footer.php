@@ -16,11 +16,29 @@
         </div>
         <div class="text-center mt-3">
             <small>已运行：<span id="runTime"></span></small><br>
-            京ICP备13024502号-7 © <a href="https://dt27.org" target="_blank">DT27</a>
-            <a href="https://github.com/DT27/CQID/issues" target="_blank" class="ml-3"><small>意见/反馈</small></a>
+            © <a href="https://dt27.org" target="_blank">DT27</a>
+            <a href="https://github.com/DT27/CQID/issues" target="_blank" class="ml-3"><small>意见/反馈</small></a><br>
+            <small>京ICP备13024502号-7</small>
         </div>
     </div>
 </footer>
+<!-- Modal -->
+<div class="modal fade" id="msg" tabindex="-1" role="dialog" aria-labelledby="message" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="msg-body" class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
 <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>

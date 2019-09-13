@@ -103,7 +103,7 @@ include("inc/header.php");
                 $.ajax({
                     type: "POST",
                     contentType: "application/x-www-form-urlencoded;charset=UTF-8",
-                    url: "getExam.php",
+                    url: "/getExam/",
                     data: {type: type},
                     success: function (result) {
                         qs = JSON.parse(result);

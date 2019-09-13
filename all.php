@@ -114,7 +114,7 @@ include("inc/header.php");
                 prev: '<span aria-hidden="true">&lt;</span>',
                 next: '<span aria-hidden="true">&gt;</span>',
                 onPageClick: function (event, page) {
-                    location.href = "/all.php?type=<?php echo $type;?>&page=" + page;
+                    location.href = "/all/?type=<?php echo $type;?>&page=" + page;
                 }
             });
         })
@@ -124,7 +124,7 @@ include("inc/header.php");
          */
         $(function () {
             $('#qType').change(function () {
-                location.href = "/all.php?type=" + $(this).val();
+                location.href = "/all/?type=" + $(this).val();
             })
         })
 
