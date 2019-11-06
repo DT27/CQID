@@ -3,12 +3,14 @@
 namespace OAuth2\Storage;
 
 include_once __DIR__ . '/../../Dotenv.php';
+
 use Dotenv;
 use OAuth2\OpenID\Storage\UserClaimsInterface;
 use OAuth2\OpenID\Storage\AuthorizationCodeInterface as OpenIDAuthorizationCodeInterface;
 use InvalidArgumentException;
 
 Dotenv::load(__DIR__ . "/../../../");
+
 /**
  * Simple PDO storage for all storage types
  *
@@ -80,10 +82,10 @@ class Pdo implements
             'refresh_token_table' => 'oauth_refresh_tokens',
             'code_table' => 'oauth_authorization_codes',
             'user_table' => 'oauth_users',
-            'jwt_table'  => 'oauth_jwt',
-            'jti_table'  => 'oauth_jti',
-            'scope_table'  => 'oauth_scopes',
-            'public_key_table'  => 'oauth_public_keys',
+            'jwt_table' => 'oauth_jwt',
+            'jti_table' => 'oauth_jti',
+            'scope_table' => 'oauth_scopes',
+            'public_key_table' => 'oauth_public_keys',
         ), $config);
     }
 
@@ -134,7 +136,7 @@ class Pdo implements
      * @param string $client_id
      * @param null|string $client_secret
      * @param null|string $redirect_uri
-     * @param null|array  $grant_types
+     * @param null|array $grant_types
      * @param null|string $scope
      * @param null|string $user_id
      * @return bool
@@ -162,7 +164,7 @@ class Pdo implements
         if (isset($details['grant_types'])) {
             $grant_types = explode(' ', $details['grant_types']);
 
-            return in_array($grant_type, (array) $grant_types);
+            return in_array($grant_type, (array)$grant_types);
         }
 
         // if grant_types are not defined, then none are restricted
@@ -188,9 +190,9 @@ class Pdo implements
 
     /**
      * @param string $access_token
-     * @param mixed  $client_id
-     * @param mixed  $user_id
-     * @param int    $expires
+     * @param mixed $client_id
+     * @param mixed $user_id
+     * @param int $expires
      * @param string $scope
      * @return bool
      */
@@ -242,10 +244,10 @@ class Pdo implements
 
     /**
      * @param string $code
-     * @param mixed  $client_id
-     * @param mixed  $user_id
+     * @param mixed $client_id
+     * @param mixed $user_id
      * @param string $redirect_uri
-     * @param int    $expires
+     * @param int $expires
      * @param string $scope
      * @param string $id_token
      * @return bool|mixed
@@ -272,8 +274,8 @@ class Pdo implements
 
     /**
      * @param string $code
-     * @param mixed  $client_id
-     * @param mixed  $user_id
+     * @param mixed $client_id
+     * @param mixed $user_id
      * @param string $redirect_uri
      * @param string $expires
      * @param string $scope
@@ -328,6 +330,7 @@ class Pdo implements
     {
         return $this->getUser($username);
     }
+
     /**
      * @param string $email
      * @return array|bool
@@ -338,7 +341,7 @@ class Pdo implements
     }
 
     /**
-     * @param mixed  $user_id
+     * @param mixed $user_id
      * @param string $claims
      * @return array|bool
      */
@@ -369,7 +372,7 @@ class Pdo implements
 
     /**
      * @param string $claim
-     * @param array  $userDetails
+     * @param array $userDetails
      * @return array
      */
     protected function getUserClaim($claim, $userDetails)
@@ -404,8 +407,8 @@ class Pdo implements
 
     /**
      * @param string $refresh_token
-     * @param mixed  $client_id
-     * @param mixed  $user_id
+     * @param mixed $client_id
+     * @param mixed $user_id
      * @param string $expires
      * @param string $scope
      * @return bool
@@ -446,8 +449,8 @@ class Pdo implements
             $priv_key = getenv("priv_key");
             $priPem = chunk_split($priv_key, 64, "\n");
             $priPem = "-----BEGIN PRIVATE KEY-----\n" . $priPem . "-----END PRIVATE KEY-----\n";
-            openssl_private_decrypt(base64_decode($password),$uPass,openssl_pkey_get_private($priPem));//私钥解密
-            openssl_private_decrypt(base64_decode($user['password']),$rPass,openssl_pkey_get_private($priPem));//私钥解密
+            openssl_private_decrypt(base64_decode($password), $uPass, openssl_pkey_get_private($priPem));//私钥解密
+            openssl_private_decrypt(base64_decode($user['password']), $rPass, openssl_pkey_get_private($priPem));//私钥解密
         } catch (Exception $e) {
             return false;
         }
@@ -478,6 +481,7 @@ class Pdo implements
             'user_id' => $username
         ), $userInfo);
     }
+
     /**
      * @param string $email
      * @return array|bool
@@ -492,7 +496,11 @@ class Pdo implements
         }
         return $userInfo;
     }
-
+    public function checkUser($username, $token)
+    {
+        $user = $this->getUserDetails($username);
+        return $token == $user["token"];
+    }
     /**
      * plaintext passwords are bad!  Override this for your application
      *
@@ -514,6 +522,68 @@ class Pdo implements
         }
 
         return $stmt->execute(compact('username', 'password', 'email'));
+    }
+
+    /**
+     * @param $uid
+     * @param $type
+     * @return array|bool
+     */
+    public function getErrorQ($uid, $type)
+    {
+        $stmt = $this->db->prepare($sql = sprintf('SELECT * from %s where uid=:uid and type=:type', "errorQ"));
+        $stmt->execute(array('uid' => $uid, 'type' => $type));
+
+        if (!$errorQ = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+            return false;
+        }
+
+        return $errorQ;
+    }
+
+    /**
+     * @param $uid
+     * @param $type
+     * @param $errorQ
+     * @return bool
+     */
+    public function setErrorQ($uid, $type, $errorQ)
+    {
+        if ($this->getErrorQ($uid, $type)) {
+            $stmt = $this->db->prepare($sql = sprintf('UPDATE %s SET errorQ=:errorQ where uid=:uid and type=:type', "errorQ"));
+        } else {
+            $stmt = $this->db->prepare(sprintf('INSERT INTO %s (uid, type, errorQ) VALUES (:uid, :type, :errorQ)', "errorQ"));
+        }
+        return $stmt->execute(compact('uid', 'type', 'errorQ'));
+    }
+
+    /**
+     * @param $username
+     * @param $token
+     * @return bool
+     */
+    public function userLogin($username, $token)
+    {
+        if ($this->getUser($username)) {
+            $stmt = $this->db->prepare($sql = sprintf('UPDATE %s SET token=:token where username=:username', $this->config['user_table']));
+            return $stmt->execute(compact('username', 'token'));
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * @param $username
+     * @return bool
+     */
+    public function logout($username)
+    {
+        if ($this->getUser($username)) {
+            $stmt = $this->db->prepare($sql = sprintf('UPDATE %s SET token="" where username=:username', $this->config['user_table']));
+            return $stmt->execute(compact('username'));
+        } else {
+            return false;
+        }
     }
 
     /**

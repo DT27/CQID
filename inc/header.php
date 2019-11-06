@@ -14,33 +14,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title><?php echo $title ? $title . " - " : ""; ?>业余无线电|业余电台操作证书模拟考试</title>
     <meta name="description" content="业余无线电台操作证书模拟考试" />
-    <meta name="keywords" content="业余无线电,业余电台,业余无线电模拟考试,业余无线电证书,业余无线电台操作证书" />
+    <meta name="keywords" content="业余无线电,业余电台,业余无线电模拟考试,业余无线电证书,业余无线电台操作证书,无线电题库" />
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/main.css">
     <script src="https://cdn.staticfile.org/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/js-cookie/2.2.1/js.cookie.min.js"></script>
     <script src="https://cdn.staticfile.org/twbs-pagination/1.4.2/jquery.twbsPagination.min.js"></script>
 </head>
 <body>
 <header>
-    <nav class="navbar navbar-md navbar-expand-md navbar-dark<?php echo $title==""||$title=="注册"||$title=="登录" ? " navbar-absolute navbar-transparant w-100" : " bg-primary"; ?><?php if($title == "") echo " d-none d-md-block"; ?>">
+    <nav class="navbar navbar-md navbar-expand-md navbar-dark<?php echo $title==""||$title=="注册"||$title=="登录" ? " navbar-absolute navbar-transparant w-100" : " bg-primary"; ?><?php if($title == "") echo " d-md-block"; ?>">
         <div class="container">
-            <a href="/" class="navbar-brand d-flex align-items-center"> CQID</a>
+            <a href="/" class="navbar-brand d-flex align-items-center" title="业余无线电台操作技术能力模拟考试平台"> CQID</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item<?php echo $title == "" ? " active" : ""; ?>">
-                        <a class="nav-link" href="/">首页</a>
+                        <a class="nav-link" title="首页" href="/">首页</a>
                     </li>
                     <li class="nav-item<?php echo $title == "刷题" ? " active" : ""; ?>">
-                        <a class="nav-link" href="/all/">刷题</a>
+                        <a class="nav-link" title="业余无线电题库" href="/all/">题库</a>
                     </li>
                     <li class="nav-item<?php echo $title == "模拟考试" ? " active" : ""; ?>">
-                        <a class="nav-link" href="/exam/">模拟考试</a>
+                        <a class="nav-link" title="业余无线电模拟考试" href="/exam/">模拟考试</a>
                     </li>
                 </ul>
-                <span class="navbar-text"><small>业余无线电台操作技术能力模拟考试平台</small></span>
+                <div class="navbar-nav" id="user-center"> </div>
             </div>
         </div>
     </nav>

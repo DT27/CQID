@@ -80,7 +80,7 @@ include("inc/header.php");
             success: function (result) {
                 if(result.status==1){
 
-                    $("#msg-body").addClass("alert alert-info").text('注册成功，即将跳转到登录页面...');
+                    $("#msg-body").removeClass("alert alert-danger").addClass("alert alert-info").text('注册成功，即将跳转到登录页面...');
                     $("#msg").modal('show');
                     setTimeout(function () {
                         location.href="/"

@@ -49,11 +49,10 @@ include("inc/header.php");
 </div>
 <script type="text/javascript" src="https://cdn.staticfile.org/jsencrypt/3.0.0-rc.1/jsencrypt.min.js"></script>
 <script>
-    var PUBLIC_KEY="";
-    $.get('/api/key/',function (result) {
+    var PUBLIC_KEY = "";
+    $.get('/api/key/', function (result) {
         PUBLIC_KEY = JSON.parse(result).data.public_key;
     });
-
     function login() {
         var crypt = new JSEncrypt();
         crypt.setPublicKey(PUBLIC_KEY);
@@ -66,14 +65,15 @@ include("inc/header.php");
             url: "/api/user/",
             data: $('#loginForm').serialize(),
             success: function (result) {
-                if(result.status==1){
-
-                    $("#msg-body").addClass("alert-info").text('登录成功');
+                if (result.status == 1) {
+                    //console.log(Cookies.getJSON("cqid"));
+                    //console.log(PHPCookies.read());
+                    $("#msg-body").addClass("alert-info").text('登录成功，即将跳转到首页');
                     $("#msg").modal('show');
                     setTimeout(function () {
-                        location.href="/"
+                        location.href = "/"
                     }, 3000);
-                }else{
+                } else {
                     $("#msg-body").addClass("alert-danger").text(result.msg);
                     $("#msg").modal('show');
                 }
@@ -93,7 +93,9 @@ include("inc/header.php");
                     if (form.checkValidity() === false) {
                         event.preventDefault();
                         event.stopPropagation();
-                    }else{login();}
+                    } else {
+                        login();
+                    }
 
                     form.classList.add('was-validated');
                 }, false);

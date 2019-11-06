@@ -9,6 +9,7 @@ require_once __DIR__ . '/../bin/Dotenv.php';
 try {
     Dotenv::load(__DIR__ . "/../");
     $dbname = getenv("mysql_database");
+
     $dbhost = getenv("mysql_host");
     $dbport = getenv("mysql_port");
     $dbuser = getenv("mysql_user");

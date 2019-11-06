@@ -44,9 +44,12 @@ include("inc/header.php");
                     </div>
                     <select class="custom-select" id="qType" name="qType">
                         <option>请选择...</option>
-                        <option value="A"<?php echo $type == "A" ? " selected" : ""; ?>>A类<?php echo " " . count($aQNum) . "题"; ?></option>
-                        <option value="B"<?php echo $type == "B" ? " selected" : ""; ?>>B类<?php echo " " . count($bQNum) . "题"; ?></option>
-                        <option value="C"<?php echo $type == "C" ? " selected" : ""; ?>>C类<?php echo " " . count($cQNum) . "题"; ?></option>
+                        <option value="A"<?php echo $type == "A" ? " selected" : ""; ?>>
+                            A类<?php echo " " . count($aQNum) . "题"; ?></option>
+                        <option value="B"<?php echo $type == "B" ? " selected" : ""; ?>>
+                            B类<?php echo " " . count($bQNum) . "题"; ?></option>
+                        <option value="C"<?php echo $type == "C" ? " selected" : ""; ?>>
+                            C类<?php echo " " . count($cQNum) . "题"; ?></option>
                     </select>
                 </div>
             </div>
@@ -61,7 +64,8 @@ include("inc/header.php");
                 for ($i = 0; $i < count($qs); $i++) {
                     $q = $qs[$i];
                     ?>
-                    <div class="card mb-4 d-none" data-num="<?php echo $q['I'] ?>" style="min-width: 90%;">
+                    <div class="card mb-4 d-none" data-num="<?php echo $q['I'] ?>"
+                         data-index="<?php echo $q['index']; ?>" style="min-width: 90%;">
                         <div class="card-body">
                             <p class="card-text">
                                 <span class="text-success mr-1"><?php echo $q['index'] + 1 . '/' . $qsNum; ?></span><?php
@@ -81,7 +85,15 @@ include("inc/header.php");
                                 //print_r($a);
                                 ?>
                                 <div class="list-group-item list-group-item-action form-check btn-group-toggle">
-                                    <label for="a-<?php echo $q['I'] ?>-<?php echo $a["k"] ?>" class="btn w-100 text-left"><input class="form-check-input" type="radio" name="a-<?php echo $q['I'] ?>" id="a-<?php echo $q['I'] ?>-<?php echo $a["k"] ?>" value="<?php echo $a["k"];?>" data-check="<?php echo $a["k"] == "A" ? "1" : "0"; ?>"><?php echo '<span class="badge badge-light">'.$x[$y] . "</span> " . $a['v'] ?></label>
+                                    <label for="a-<?php echo $q['I'] ?>-<?php echo $a["k"] ?>"
+                                           class="btn w-100 text-left"><input class="form-check-input" type="radio"
+                                                                              name="a-<?php echo $q['I'] ?>"
+                                                                              id="a-<?php echo $q['I'] ?>-<?php echo $a["k"] ?>"
+                                                                              value="<?php echo $a["k"]; ?>"
+                                                                              data-num="<?php echo $q['I'] ?>"
+                                                                              data-check="<?php echo $a["k"] == "A" ? "1" : "0"; ?>"
+                                                                              data-index="<?php echo $q['index']; ?>"><?php echo '<span class="badge badge-light">' . $x[$y] . "</span> " . $a['v'] ?>
+                                    </label>
                                 </div>
                                 <?php
                                 $y++;
@@ -97,7 +109,10 @@ include("inc/header.php");
         </div>
     </main>
     <script>
+        var qsArr;
         var pageNum = Math.ceil(<?php echo $qsNum;?> / 10);
+        var type = Cookies.getJSON("cqid_type") ? Cookies.getJSON("cqid_type") : "A";
+        var allQ = localStorage.getItem("allQ" + type);
         /**
          * 分页加载数据
          */
@@ -129,25 +144,110 @@ include("inc/header.php");
         })
 
         $(function () {
+            if (allQ == null) {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded;charset=UTF-8",
+                    url: "/api/getAll/",
+                    async: false,
+                    data: {type: type, act: "getErrorQ"},
+                    success: function (result) {
+                        if (JSON.parse(result).status == 0) {
+                            $.ajax({
+                                type: "POST",
+                                contentType: "application/x-www-form-urlencoded;charset=UTF-8",
+                                url: "/api/getAll/",
+                                async: false,
+                                data: {type: type},
+                                success: function (res) {
+                                    qsArr = JSON.parse(res);
+                                    localStorage.setItem("allQ" + type, res);
+                                },
+                                error: function (e) {
+                                    console.log(e.status);
+                                    console.log(e.responseText);
+                                }
+                            });
+                        } else {
+                            qsArr = JSON.parse(result);
+                            //console.log(result);
+                            localStorage.setItem("allQ" + type, result);
+                        }
+                    },
+                    error: function (e) {
+                        console.log(e.status);
+                        console.log(e.responseText);
+                    }
+                });
+            } else {
+                qsArr = JSON.parse(allQ);
+            }
+
+
+            $(".card").each(function (index, element) {
+                if (qsArr == null) {
+                    return false;
+                }
+                ind = $(element).data("index");
+                userA = qsArr[ind]["userA"];
+                //console.log(userA);
+                if (userA == null) {
+                    return true;
+                }
+                if (userA == "A") {
+                    $(element).children().children().children("label[for$='A']").addClass("text-success");
+                    //console.log($(this).attr("name"));
+                } else {
+                    $(element).children().children().children("label[for$='" + userA + "']").addClass("text-danger");
+                    $(element).children().children().children("label[for$='A']").addClass("text-success");
+                    $(element).children().children().children("label[for$='A']").children("span").addClass("right");
+                }
+            })
+
             $(".form-check-input").on("click", function () {
-                var a = $(this).val();
-                console.log(a);
-                if(a=="A"){
+                var selectVal = $(this).val();
+                var itemNum = $(this).data("num");
+
+                if (selectVal == "A") {
                     $(this).parent("label").addClass("text-success");
                     $(this).parent("label").children("span").addClass("wrong");
                     console.log($(this).attr("name"));
-                }else{
+                } else {
                     $(this).parent("label").addClass("text-danger");
-                    $("[for='"+$(this).attr("name")+"-A']").addClass("text-success");
-                    $("[for='"+$(this).attr("name")+"-A']").children("span").addClass("right");
+                    $("[for='" + $(this).attr("name") + "-A']").addClass("text-success");
+                    $("[for='" + $(this).attr("name") + "-A']").children("span").addClass("right");
                 }
-                $("[name='"+$(this).attr("name")+"']").attr("disabled",true);
+                $("[name='" + $(this).attr("name") + "']").attr("disabled", true);
+
+                for (var i = 0, len = qsArr.length; i < len; i++) {
+                    if (qsArr[i]["I"] == itemNum) {
+                        qsArr[i]["userA"] = selectVal;
+                        break;
+                    }
+                }
+                localStorage.setItem("allQ" + type, JSON.stringify(qsArr));
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded;charset=UTF-8",
+                    url: "/api/getAll/",
+                    data: {type: type, act: "setErrorQ", errorQ: JSON.stringify(qsArr)},
+                    success: function (result) {
+                        console.log(result);
+                    },
+                    error: function (e) {
+                        console.log(e.status);
+                        console.log(e.responseText);
+                    }
+                });
+                //
+                //var qsArr = JSON.parse(qs);
                 //var qs = localStorage.getItem("qs" + type);
                 //var qsArr = JSON.parse(qs);
                 //qsArr[qIndex]["userA"] = $("input:radio:checked").val();
                 //localStorage.setItem("qs" + type, JSON.stringify(qsArr));
 
             })
+
 
         })
     </script>

@@ -7,57 +7,36 @@
  */
 
 require_once('import.php');
-$type = empty($_REQUEST['type']) ? "A" : $_REQUEST['type'];
-
-switch ($type) {
-    case "A":
-        $allQ = getAQ();
-        break;
-    case "B":
-        $allQ = getBQ();
-        break;
-    case "C":
-        $allQ = getCQ();
-        break;
-    default:
-        $type = "A";
-        $allQ = getAQ();
-        break;
+if (empty($_REQUEST['type'])) {
+    setcookie("cqid_type", "", time() - 3600, "/", ".cqid.cn");
+} else {
+    $type = $_REQUEST['type'];
+    $expire = time() + 3600 * 24 * 60;
+    setcookie("cqid_type", $type, $expire, "/", ".cqid.cn");
 }
-$qs = getExam($type);
+
 
 $title = "模拟考试";
 include("inc/header.php");
 ?>
     <main class="jumbotron">
-        <div class="container">
-            <div class="row">
-                <div class="input-group mb-4">
-                    <div class="form-inline input-group-prepend">
-                        <label class="input-group-text" for="qType">业余电台操作证书分类</label>
-                    </div>
-                    <select class="custom-select" id="qType" name="qType" style="max-width: 25rem;">
-                        <option>请选择...</option>
-                        <option value="A"<?php echo $type == "A" ? " selected" : ""; ?>>A类<?php echo " " . count($aQNum) . "题"; ?></option>
-                        <option value="B"<?php echo $type == "B" ? " selected" : ""; ?>>B类<?php echo " " . count($bQNum) . "题"; ?></option>
-                        <option value="C"<?php echo $type == "C" ? " selected" : ""; ?>>C类<?php echo " " . count($cQNum) . "题"; ?></option>
-                    </select>
-                    <button data-toggle="collapse" data-target="#reGAlert" aria-expanded="false" class="btn btn-link">+
-                    </button>
-                </div>
-            </div>
-            <div class="form-group alert-danger p-2 collapse" id="reGAlert">
-
-                <button class="btn btn-sm btn-primary" id="reG">重新生成试卷</button>
-                <small class="text-muted">
-                    重新生成会清空已做试题。
-                </small>
-
-            </div>
-
+        <div class="container d-none mb-5" id="examMain">
             <div class="text-center" id="loading">
                 <div class="spinner-border" role="status">
                     <span class="sr-only">正在加载题库...</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="text-center w-100 mb-3">
+                <p class="h2">业余电台操作证书</br>模拟考试 <span id="examType"></span>类 <button data-toggle="collapse" data-target="#reGAlert" aria-expanded="false" class="btn btn-link mr-n5">*
+                    </button></p>
+
+                    <div class="form-group alert-danger collapse p-1 m-0" id="reGAlert">
+                        <button class="btn btn-sm btn-primary" id="reG">重新生成试卷</button>
+                        <small class="text-muted">
+                            重新生成会清空已做试题。
+                        </small>
+                    </div>
                 </div>
             </div>
             <div class="row">
@@ -75,7 +54,8 @@ include("inc/header.php");
                             <button type="button" class="next btn btn-sm btn-outline-primary">下一题</button>
                         </div>
                         <small class="text-muted">
-                            <a class="" data-toggle="collapse" href="#colA" role="button" aria-expanded="false" aria-controls="collapse"> 查看答案 </a>
+                            <a class="" data-toggle="collapse" href="#colA" role="button" aria-expanded="false"
+                               aria-controls="collapse"> 查看答案 </a>
                         </small>
 
                     </div>
@@ -86,44 +66,141 @@ include("inc/header.php");
 
                 </div>
             </div>
-            <div class="row">
+            <div class="row d-flex">
                 <button type="button" class="btn btn-info" id="submit">提交</button>
+                <div class="text-right ml-auto" style="font-size:20px;font-weight:800;color:#FF9900">剩余时间：<span
+                            id="remainTime"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg">
+
+            <div class="container">
+                <div class="d-lg-flex flex-lg-equal mt-3 py-3">
+
+
+                    <div class="card bg-success text-white mr-lg-3 mb-3 overflow-hidden shadow">
+                        <div class="card-body">
+                            <h4 class="card-title text-center">A类
+                                <small><?php echo " " . count($aQNum) . "题"; ?></small>
+                            </h4>
+                            <p style="text-indent: 2em;">申请人初次申请业余无线电台操作技术能力考核，须首先参加 A 类业余无线电台操作技术能力考试。</p>
+                            <p style="text-indent: 2em;">A类操作技术能力考试试卷共30题，答题时间不超过40分钟，答对25题（含）以上为合格。</p>
+                            <div class="mt-auto text-center">
+                                <a href="?type=A" class="btn btn-lg btn-light">开始考试</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card bg-info text-white mr-lg-3 mb-3 overflow-hidden shadow">
+                        <div class="card-body">
+                            <h4 class="card-title text-center">B类
+                                <small><?php echo " " . count($bQNum) . "题"; ?></small>
+                            </h4>
+                            <p style="text-indent: 2em;">取得 A 类《操作证书》六个月后可以申请参加 B 类操作技术能力考试。</p>
+                            <p style="text-indent: 2em;">B类操作技术能力考试试卷共50题，答题时间不超过60分钟，答对40题（含）以上为合格。</p>
+                            <div class="text-center" style="margin-top:2.5rem;">
+                                <a href="?type=B" class="btn btn-lg btn-light">开始考试</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card bg-danger text-white mb-3 overflow-hidden shadow">
+                        <div class="card-body">
+                            <h4 class="card-title text-center">C类
+                                <small><?php echo " " . count($cQNum) . "题"; ?></small>
+                            </h4>
+                            <p style="text-indent: 2em;">取得 B 类《操作证书》并且设置 B 类业余无线电台二年后，可以申请参加 C 类操作技术能力考试。</p>
+                            <p style="text-indent: 2em;">C类操作技术能力考试试卷共80题，答题时间不超过90分钟，答对60题（含）以上为合格。</p>
+                            <div class="mt-auto text-center">
+                                <a href="?type=C" class="btn btn-lg btn-light">开始考试</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </main>
     <script>
+        var SysSecond;
+        var InterValObj;
+
+        //将时间减去1秒，计算天、时、分、秒
+        function SetRemainTime() {
+            if (SysSecond > 0) {
+                SysSecond = SysSecond - 1;
+                var second = Math.floor(SysSecond % 60);            // 计算秒
+                var minite = Math.floor((SysSecond / 60) % 60);      //计算分
+                var hour = Math.floor((SysSecond / 3600) % 24);      //计算小时
+                var day = Math.floor((SysSecond / 3600) / 24);       //计算天
+
+                var hourDiv = "<span id='hourSpan'>" + hour + "小时" + "</span>";
+                var dayDiv = "<span id='daySpan'>" + day + "天" + "</span>";
+
+                $("#remainTime").html(dayDiv + hourDiv + minite + "分" + second + "秒");
+
+                if (hour === 0) {//当不足1小时时隐藏小时
+                    $('#hourSpan').css('display', 'none');
+                }
+                if (day === 0) {//当不足1天时隐藏天
+                    $('#daySpan').css('display', 'none');
+                }
+
+            } else {//剩余时间小于或等于0的时候，就停止间隔函数
+                window.clearInterval(InterValObj);
+                //这里可以添加倒计时时间为0后需要执行的事件
+                alert("时间为0");
+            }
+        }
 
         $(function () {
-
             var qIndex = 0;
-            $(".prev").attr("disabled", "disabled")
-            var type = $("#qType").val();
-            var qs = localStorage.getItem("qs" + type);
-            if (qs == null) {
-                $.ajax({
-                    type: "POST",
-                    contentType: "application/x-www-form-urlencoded;charset=UTF-8",
-                    url: "/getExam/",
-                    data: {type: type},
-                    success: function (result) {
-                        qs = JSON.parse(result);
-                        localStorage.setItem("qs" + type, result);
-                        generateAList(qs[0]);
+            if (Cookies.getJSON("cqid_type")) {
+                var type = Cookies.getJSON("cqid_type");
+                $("#examType").text(type);
+                switch (type) {
+                    case "A":
+                        SysSecond = 2400; //倒计时的起始时间
+                        break;
+                    case "B":
+                        SysSecond = 3600; //倒计时的起始时间
+                        break;
+                    case "C":
+                        SysSecond = 5400; //倒计时的起始时间
+                        break;
+                }
 
-                        $('#loading').hide();
-                        $('.card').removeClass("d-none")
-                    },
-                    error: function (e) {
-                        console.log(e.status);
-                        console.log(e.responseText);
-                    }
-                });
-            } else {
-                qs = JSON.parse(qs);
+                $("#examMain").removeClass("d-none");
+                $(".prev").attr("disabled", "disabled")
+                var qs = localStorage.getItem("qs" + type);
+                if (qs == null) {
+                    $.ajax({
+                        type: "POST",
+                        contentType: "application/x-www-form-urlencoded;charset=UTF-8",
+                        url: "/api/getExam/",
+                        data: {type: type},
+                        success: function (result) {
+                            qs = JSON.parse(result);
+                            localStorage.setItem("qs" + type, result);
+                            generateAList(qs[0]);
 
-                generateAList(qs[0]);
-                $('#loading').hide();
-                $('.card').removeClass("d-none");
+                            $('#loading').hide();
+                            $('.card').removeClass("d-none")
+                        },
+                        error: function (e) {
+                            console.log(e.status);
+                            console.log(e.responseText);
+                        }
+                    });
+                } else {
+                    qs = JSON.parse(qs);
+
+                    generateAList(qs[0]);
+                    $('#loading').hide();
+                    $('.card').removeClass("d-none");
+                }
+
+                InterValObj = window.setInterval(SetRemainTime, 1000); //间隔函数，1秒执行
             }
             /**
              * 切换分类
@@ -254,7 +331,7 @@ include("inc/header.php");
                     }
                 }
                 var aQNum = 0;
-                switch($('#qType').val()){
+                switch (type) {
                     case "A":
                         aQNum = 25;
                         break;
@@ -265,16 +342,17 @@ include("inc/header.php");
                         aQNum = 60;
                         break;
                 }
-                if(y<aQNum){
-                    alert("答对题目数：" + y + "\n本次考试不合格。");
-                }else{
-                    alert("恭喜！\n答对题目数：" + y + "\n本次考试成绩合格。");
+                if (y < aQNum) {
+                    alert("答对题目数：" + y + "\n本次考试不合格，请继续努力！");
+                } else {
+                    alert("恭喜！\n答对题目数：" + y + "\n本次考试成绩合格！");
                 }
             })
 
             $("[data-toggle=collapse]").click(function () {
                 $("#colA").removeClass("d-none");
             })
+
 
         })
     </script>

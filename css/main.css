@@ -1,8 +1,9 @@
 @media (max-width:768px) {
     .navbar-transparant {
-        background: rgba(0,0,0,.65)
+        background: rgba(18, 131, 218, .85);
     }
 }
+
 .img-fluid, .img-thumbnail {
     max-width: 100%;
     height: auto
@@ -53,9 +54,7 @@ a {
     padding-bottom: 2px;
     -webkit-transition: all .2s ease-in-out;
     transition: all .2s ease-in-out;
-}
 
-a {
     color: #343a40;
     text-decoration: none;
     background-color: transparent;
@@ -63,10 +62,7 @@ a {
 }
 
 a:hover {
-    border-color: #adb5bd
-}
-
-a:hover {
+    border-color: #adb5bd;
     color: #121416;
     text-decoration: none
 }
@@ -111,4 +107,17 @@ label.text-success:before {
     height: 24px;
     display: inline-block;
     vertical-align: middle;
+}
+
+.nav-pills .nav-link {
+    border-radius: .35rem
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .show>.nav-link {
+    color: #343a40;
+    background-color: #dee2e6
+}
+.nav-link {
+    border-bottom: none
 }

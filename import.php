@@ -16,10 +16,10 @@ function del($var)
     return (trim($var));
 }
 
-$allQ = getAllQ('source/总题库文件(v171031).txt');
-$aQNum = getAQNum('source/A_试卷涉及题号(v170717).txt');
-$bQNum = getAQNum('source/B_试卷涉及题号(v170717).txt');
-$cQNum = getAQNum('source/C_试卷涉及题号(v170717).txt');
+$allQ = getAllQ($_SERVER['DOCUMENT_ROOT'].'/source/总题库文件(v171031).txt');
+$aQNum = getAQNum($_SERVER['DOCUMENT_ROOT'].'/source/A_试卷涉及题号(v170717).txt');
+$bQNum = getAQNum($_SERVER['DOCUMENT_ROOT'].'/source/B_试卷涉及题号(v170717).txt');
+$cQNum = getAQNum($_SERVER['DOCUMENT_ROOT'].'/source/C_试卷涉及题号(v170717).txt');
 
 /**
  *获取所有题库
@@ -129,7 +129,6 @@ function getAQ()
 {
     global $allQ, $aQNum;
     $aQ = array();
-
     $y = 0;
     for ($i = 0; $i < count($allQ); $i++) {
         if (in_array($allQ[$i]['I'], $aQNum)) {

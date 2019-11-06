@@ -5,7 +5,7 @@
  * Date: 2019/8/12
  * Time: 22:24
  */
-require_once('import.php');
+require_once('../import.php');
 
 $type = !empty($_REQUEST['type']) ? $_REQUEST['type'] : "A";
 
