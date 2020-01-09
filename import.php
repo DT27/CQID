@@ -16,10 +16,10 @@ function del($var)
     return (trim($var));
 }
 
-$allQ = getAllQ($_SERVER['DOCUMENT_ROOT'].'/source/总题库文件(v171031).txt');
-$aQNum = getAQNum($_SERVER['DOCUMENT_ROOT'].'/source/A_试卷涉及题号(v170717).txt');
-$bQNum = getAQNum($_SERVER['DOCUMENT_ROOT'].'/source/B_试卷涉及题号(v170717).txt');
-$cQNum = getAQNum($_SERVER['DOCUMENT_ROOT'].'/source/C_试卷涉及题号(v170717).txt');
+$allQ = getAllQ($_SERVER['DOCUMENT_ROOT'] . '/source/总题库文件(v171031).txt');
+$aQNum = getAQNum($_SERVER['DOCUMENT_ROOT'] . '/source/A_试卷涉及题号(v170717).txt');
+$bQNum = getAQNum($_SERVER['DOCUMENT_ROOT'] . '/source/B_试卷涉及题号(v170717).txt');
+$cQNum = getAQNum($_SERVER['DOCUMENT_ROOT'] . '/source/C_试卷涉及题号(v170717).txt');
 
 /**
  *获取所有题库
@@ -125,7 +125,7 @@ function getCQNum($cqfile)
 /**
  * 获取所有A类题库
  */
-function getAQ()
+function getAQ($shuff)
 {
     global $allQ, $aQNum;
     $aQ = array();
@@ -140,7 +140,9 @@ function getAQ()
                 array("k" => "C", "v" => $allQ[$i]["C"]),
                 array("k" => "D", "v" => $allQ[$i]["D"]),
             );
-            shuffle($answer);
+            if ($shuff) {
+                shuffle($answer);
+            }
             $aQ[$y]["answer"] = $answer;
             $y++;
         }
@@ -171,7 +173,7 @@ function getQSP($qs, $pageSize, $page)
 /**
  * 获取所有B类题库
  */
-function getBQ()
+function getBQ($shuff)
 {
     global $allQ, $bQNum;
     $bQ = array();
@@ -186,7 +188,9 @@ function getBQ()
                 array("k" => "C", "v" => $allQ[$i]["C"]),
                 array("k" => "D", "v" => $allQ[$i]["D"]),
             );
-            shuffle($answer);
+            if ($shuff) {
+                shuffle($answer);
+            }
             $bQ[$y]["answer"] = $answer;
             $y++;
         }
@@ -197,7 +201,7 @@ function getBQ()
 /**
  * 获取所有C类题库
  */
-function getCQ()
+function getCQ($shuff)
 {
     global $allQ, $cQNum;
     $cQ = array();
@@ -212,7 +216,9 @@ function getCQ()
                 array("k" => "C", "v" => $allQ[$i]["C"]),
                 array("k" => "D", "v" => $allQ[$i]["D"]),
             );
-            shuffle($answer);
+            if ($shuff) {
+                shuffle($answer);
+            }
             $cQ[$y]["answer"] = $answer;
             $y++;
         }
@@ -228,15 +234,15 @@ function getExam($type)
     $q = array();
     switch ($type) {
         case "A":
-            $q = getAQ();
+            $q = getAQ(true);
             $QSR = array_rand($q, 30);
             break;
         case "B":
-            $q = getBQ();
+            $q = getBQ(true);
             $QSR = array_rand($q, 50);
             break;
         case "C":
-            $q = getCQ();
+            $q = getCQ(true);
             $QSR = array_rand($q, 80);
             break;
     }

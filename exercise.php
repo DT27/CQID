@@ -12,27 +12,27 @@ require_once('import.php');
 $type = empty($_REQUEST['type']) ? "A" : $_REQUEST['type'];
 switch ($type) {
     case "A":
-        $aQS = getAQ(false);
+        $aQS = getAQ(true);
         $qs = getQSP($aQS, $pageSize, $page);
         $qsNum = count($aQNum);
         break;
     case "B":
-        $bQS = getBQ(false);
+        $bQS = getBQ(true);
         $qs = getQSP($bQS, $pageSize, $page);
         $qsNum = count($bQNum);
         break;
     case "C":
-        $cQS = getCQ(false);
+        $cQS = getCQ(true);
         $qs = getQSP($cQS, $pageSize, $page);
         $qsNum = count($cQNum);
         break;
     default:
-        $aQS = getAQ(false);
+        $aQS = getAQ(true);
         $qs = getQSP($aQS, $pageSize, $page);
         $qsNum = count($aQNum);
         break;
 }
-$title = "浏览题库";
+$title = "刷题";
 include("inc/header.php");
 ?>
     <main class="jumbotron">
@@ -84,9 +84,9 @@ include("inc/header.php");
                             foreach ($q["answer"] as $a) {
                                 //print_r($a);
                                 ?>
-                                <div class="list-group-item list-group-item-action form-check btn-group-toggle<?php echo $a["k"]=="A"?" bg-success":"" ?>">
+                                <div class="list-group-item list-group-item-action form-check btn-group-toggle">
                                     <label for="a-<?php echo $q['I'] ?>-<?php echo $a["k"] ?>"
-                                           class="btn w-100 text-left<?php echo $a["k"]=="A"?" text-white":"" ?>"><input class="form-check-input" type="radio"
+                                           class="btn w-100 text-left"><input class="form-check-input" type="radio"
                                                                               name="a-<?php echo $q['I'] ?>"
                                                                               id="a-<?php echo $q['I'] ?>-<?php echo $a["k"] ?>"
                                                                               value="<?php echo $a["k"]; ?>"
@@ -112,6 +112,7 @@ include("inc/header.php");
         var qsArr;
         var pageNum = Math.ceil(<?php echo $qsNum;?> / 10);
         var type = Cookies.getJSON("cqid_type") ? Cookies.getJSON("cqid_type") : "A";
+        var allQ = localStorage.getItem("allQ" + type);
         /**
          * 分页加载数据
          */
@@ -142,5 +143,112 @@ include("inc/header.php");
             })
         })
 
+        $(function () {
+            if (allQ == null) {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded;charset=UTF-8",
+                    url: "/api/getAll/",
+                    async: false,
+                    data: {type: type, act: "getErrorQ"},
+                    success: function (result) {
+                        if (JSON.parse(result).status == 0) {
+                            $.ajax({
+                                type: "POST",
+                                contentType: "application/x-www-form-urlencoded;charset=UTF-8",
+                                url: "/api/getAll/",
+                                async: false,
+                                data: {type: type},
+                                success: function (res) {
+                                    qsArr = JSON.parse(res);
+                                    localStorage.setItem("allQ" + type, res);
+                                },
+                                error: function (e) {
+                                    console.log(e.status);
+                                    console.log(e.responseText);
+                                }
+                            });
+                        } else {
+                            qsArr = JSON.parse(result);
+                            //console.log(result);
+                            localStorage.setItem("allQ" + type, result);
+                        }
+                    },
+                    error: function (e) {
+                        console.log(e.status);
+                        console.log(e.responseText);
+                    }
+                });
+            } else {
+                qsArr = JSON.parse(allQ);
+            }
+
+
+            $(".card").each(function (index, element) {
+                if (qsArr == null) {
+                    return false;
+                }
+                ind = $(element).data("index");
+                userA = qsArr[ind]["userA"];
+                //console.log(userA);
+                if (userA == null) {
+                    return true;
+                }
+                if (userA == "A") {
+                    $(element).children().children().children("label[for$='A']").addClass("text-success");
+                    //console.log($(this).attr("name"));
+                } else {
+                    $(element).children().children().children("label[for$='" + userA + "']").addClass("text-danger");
+                    $(element).children().children().children("label[for$='A']").addClass("text-success");
+                    $(element).children().children().children("label[for$='A']").children("span").addClass("right");
+                }
+            })
+
+            $(".form-check-input").on("click", function () {
+                var selectVal = $(this).val();
+                var itemNum = $(this).data("num");
+
+                if (selectVal == "A") {
+                    $(this).parent("label").addClass("text-success");
+                    $(this).parent("label").children("span").addClass("wrong");
+                    console.log($(this).attr("name"));
+                } else {
+                    $(this).parent("label").addClass("text-danger");
+                    $("[for='" + $(this).attr("name") + "-A']").addClass("text-success");
+                    $("[for='" + $(this).attr("name") + "-A']").children("span").addClass("right");
+                }
+                $("[name='" + $(this).attr("name") + "']").attr("disabled", true);
+
+                for (var i = 0, len = qsArr.length; i < len; i++) {
+                    if (qsArr[i]["I"] == itemNum) {
+                        qsArr[i]["userA"] = selectVal;
+                        break;
+                    }
+                }
+                localStorage.setItem("allQ" + type, JSON.stringify(qsArr));
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded;charset=UTF-8",
+                    url: "/api/getAll/",
+                    data: {type: type, act: "setErrorQ", errorQ: JSON.stringify(qsArr)},
+                    success: function (result) {
+                        console.log(result);
+                    },
+                    error: function (e) {
+                        console.log(e.status);
+                        console.log(e.responseText);
+                    }
+                });
+                //
+                //var qsArr = JSON.parse(qs);
+                //var qs = localStorage.getItem("qs" + type);
+                //var qsArr = JSON.parse(qs);
+                //qsArr[qIndex]["userA"] = $("input:radio:checked").val();
+                //localStorage.setItem("qs" + type, JSON.stringify(qsArr));
+
+            })
+
+
+        })
     </script>
 <?php require_once('inc/footer.php'); ?>

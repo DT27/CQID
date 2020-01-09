@@ -121,3 +121,7 @@ label.text-success:before {
 .nav-link {
     border-bottom: none
 }
+
+#cityInfo img{
+    max-width: 100%;
+}

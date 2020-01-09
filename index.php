@@ -44,6 +44,7 @@ include("inc/header.php");
                             </h5>
                             <p style="text-indent: 2em;">申请人初次申请业余无线电台操作技术能力考核，须首先参加 A 类业余无线电台操作技术能力考试。</p>
                             <p style="text-indent: 2em;">A类操作技术能力考试试卷共30题，答题时间不超过40分钟，答对25题（含）以上为合格。</p>
+                            <p>推荐一篇总结文章：<a href="https://twznow.com/archives/68/" target="_blank" title="中国A类业余无线电台操作证快速复习指北">中国A类业余无线电台操作证快速复习指北</a></p>
                             <div class="text-right"><a class="" href="./all/?type=A">查看题库 »</a></div>
                         </div>
                     </div>
@@ -54,6 +55,7 @@ include("inc/header.php");
                             </h5>
                             <p style="text-indent: 2em;">取得 A 类《操作证书》六个月后可以申请参加 B 类操作技术能力考试。</p>
                             <p style="text-indent: 2em;">B类操作技术能力考试试卷共50题，答题时间不超过60分钟，答对40题（含）以上为合格。</p>
+                            <p>推荐一篇总结文章：<a href="https://twznow.com/archives/78/" target="_blank" title="中国A类业余无线电台操作证快速复习指北">中国B类业余无线电台操作证快速复习指北</a></p>
                             <div class="text-right"><a class="" href="./all/?type=B">查看题库 »</a></div>
                         </div>
                     </div>
@@ -106,7 +108,7 @@ include("inc/header.php");
                         <div>
                             <h5 class="mt-4">A类业余无线电台</h5>
                             <p>
-                                A类业余无线电台可以在<strong>30一3000MH2(兆赫兹)</strong>范围内的各业余业务和卫星业余业务频段内发射工作，且最大发射功率不大于<strong>25瓦</strong>。
+                                A类业余无线电台可以在<strong>30一3000MHz(兆赫兹)</strong>范围内的各业余业务和卫星业余业务频段内发射工作，且最大发射功率不大于<strong>25瓦</strong>。
                             </p>
                         </div>
                     </div>

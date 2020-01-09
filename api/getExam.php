@@ -12,13 +12,13 @@ $type = !empty($_REQUEST['type']) ? $_REQUEST['type'] : "A";
 $qs = getExam($type);
 switch ($type) {
     case "A":
-        $allQ = getAQ();
+        $allQ = getAQ(true);
         break;
     case "B":
-        $allQ = getBQ();
+        $allQ = getBQ(true);
         break;
     case "C":
-        $allQ = getCQ();
+        $allQ = getCQ(true);
         break;
 }
 $q = array();

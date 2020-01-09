@@ -45,13 +45,13 @@ if (!empty($_REQUEST['act']) && $_REQUEST['act'] == 'getErrorQ') {
 
 switch ($type) {
     case "A":
-        $allQ = getAQ();
+        $allQ = getAQ(false);
         break;
     case "B":
-        $allQ = getBQ();
+        $allQ = getBQ(false);
         break;
     case "C":
-        $allQ = getCQ();
+        $allQ = getCQ(false);
         break;
 }
 

@@ -18,7 +18,8 @@
             <a href="https://github.com/DT27/CQID/issues" target="_blank" class="ml-3">
                 <small>意见/反馈</small>
             </a> <br>
-            <small>京ICP备13024502号-7</small>
+            <small>
+                <a href="http://www.beian.miit.gov.cn/" target="_blank" class="text">京ICP备13024502号-7</a></small>
             <br>
             <small>已运行：<span id="runTime"></span></small>
         </div>
@@ -46,7 +47,7 @@
         var user = Cookies.getJSON("cqid");
         if (user && user.name) {
             user["act"] = "logout";
-            Cookies.remove('cqid', {path: '/', domain: '.cq.loc'})
+                Cookies.remove('cqid', {path: '/', domain: '.cqid.cn'})
             $.ajax({
                 type: "post",
                 dataType: "json",

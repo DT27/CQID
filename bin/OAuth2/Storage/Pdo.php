@@ -483,6 +483,32 @@ class Pdo implements
     }
 
     /**
+     * 获取地区考试信息
+     * @param $code
+     * @return array|bool
+     */
+    public function getCity($code)
+    {
+        $stmt = $this->db->prepare($sql = sprintf('SELECT * from %s where code=:code', 'city'));
+        $stmt->execute(array('code' => $code));
+
+        if (!$cityInfo = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+            return false;
+        }
+        return $cityInfo;
+    }
+
+    public function updateCity($code, $website, $name, $phone, $wx, $ps, $checked)
+    {
+        if ($this->getCity($code)) {
+            $stmt = $this->db->prepare($sql = sprintf('UPDATE %s SET website=:website,name=:name, phone=:phone, wx=:wx, ps=:ps, checked=:checked where code=:code', "city"));
+        } else {
+            $stmt = $this->db->prepare(sprintf('INSERT INTO %s (code, website, name, phone, wx, ps, checked) VALUES (:code, :website, :name, :phone, :wx, :ps, :checked)', "city"));
+        }
+        return $stmt->execute(compact('code', 'website', 'name', 'phone', 'wx', 'ps', 'checked'));
+    }
+
+    /**
      * @param string $email
      * @return array|bool
      */
@@ -496,11 +522,13 @@ class Pdo implements
         }
         return $userInfo;
     }
+
     public function checkUser($username, $token)
     {
         $user = $this->getUserDetails($username);
         return $token == $user["token"];
     }
+
     /**
      * plaintext passwords are bad!  Override this for your application
      *
