@@ -124,7 +124,7 @@ include("inc/header.php");
                         <div>
                             <h5 class="mt-4">C类业余无线电台</h5>
                             <p>
-                                C类业余无线电台可以在各业余业务和卫星业余业务频段内发射工作，<strong>30MHz以下</strong>频段最大发射功率<strong>不太于1000瓦</strong>，<strong>30MHz以上</strong>频段最大发射功率<strong>不太于25瓦</strong>。
+                                C类业余无线电台可以在各业余业务和卫星业余业务频段内发射工作，<strong>30MHz以下</strong>频段最大发射功率<strong>不大于1000瓦</strong>，<strong>30MHz以上</strong>频段最大发射功率<strong>不大于25瓦</strong>。
                             </p>
                         </div>
                     </div>
