@@ -6,6 +6,9 @@
  * @2019-08-09 18:07:00
  */
 require_once __DIR__ . '/../bin/Server.php';
+require_once __DIR__ . '/../bin/Dotenv.php';
+Dotenv::load(__DIR__ . "/../");
+$domain = getenv("domain");
 
 $response = array('status' => '0', 'msg' => 'failed', 'data' => '');
 
@@ -50,7 +53,7 @@ if (!empty($_POST['act']) && $_POST['act'] == 'signup') {
         openssl_public_encrypt($username . $slat, $token, openssl_pkey_get_public($pubPem));
         if ($storage->userLogin($username, base64_encode($token))) {
             $expire = time() + 3600 * 24 * 60;
-            setcookie("cqid", '{"id":"' . $user["id"] . '","name":"' . $username . '","token":"' . base64_encode($token) . '"}', $expire, "/", ".cqid.cn");//,"expire":"'.$expire.'","domain":".cqid.cn","secure":"TRUE"}
+            setcookie("cqid", '{"id":"' . $user["id"] . '","name":"' . $username . '","token":"' . base64_encode($token) . '"}', $expire, "/", $domain);//,"expire":"'.$expire.'","domain":".cqid.cn","secure":"TRUE"}
             //var_dump($_COOKIE["cqid"]);
         } else {
             $response['msg'] = '登录失败，请点击页面底部的"意见/反馈"进行反馈。';

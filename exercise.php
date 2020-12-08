@@ -8,7 +8,7 @@
 $isAll = 1;
 $pageSize = 10;
 $page = isset($_REQUEST['page']) ? $_REQUEST['page'] : 1;
-require_once('import.php');
+require_once('api/import.php');
 $type = empty($_REQUEST['type']) ? "A" : $_REQUEST['type'];
 switch ($type) {
     case "A":

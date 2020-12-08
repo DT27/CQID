@@ -5,7 +5,7 @@
  * Author: DT27 <https://dt27.org>
  * @2019-08-06 18:27:00
  */
-require_once('import.php');
+require_once('api/import.php');
 $title = "";
 include("inc/header.php");
 ?>

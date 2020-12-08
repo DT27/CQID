@@ -5,7 +5,7 @@
  * Author: DT27 <https://dt27.org>
  * @2019-11-08 22:12:12
  */
-require_once('import.php');
+require_once('api/import.php');
 $title = "业余无线电考试报名";
 include("inc/header.php");
 ?>
@@ -111,6 +111,7 @@ include("inc/header.php");
 <script>
     var cityArr = new Array();
     $("#selProvince").on('change', function () {
+        $('#frmCity').removeClass("was-validated");
         //console.log(cityArr);
         code = $(this).val();
         $('#selCity').html('<option value="' + code + '">' + $("#selProvince").find("option:selected").text()
@@ -170,7 +171,7 @@ include("inc/header.php");
                 $("#checked").html("<div class='text-success'>已验证</div>");
             }
             $("#update_date").text(res.data.update_date);
-            $("#share_url").html("<a href='https://www.cqid.cn/cityInfo/"+code+"'>https://www.cqid.cn/cityInfo/"+code+"</a>")
+            $("#share_url").html("<a href='https://www.cqid.cn/cityInfo/"+code+"' target='_blank'>https://www.cqid.cn/cityInfo/"+code+"</a>")
         } else {
             $("#cityInfo").addClass("d-none");
             $("#noneInfo").removeClass("d-none");
@@ -188,12 +189,12 @@ include("inc/header.php");
                     if (form.checkValidity() === false) {
                         event.preventDefault();
                         event.stopPropagation();
+                        form.classList.add('was-validated');
                     } else {
                         console.log("提交");
                         updateCity();
+                        $('#frmCity').removeClass("was-validated");
                     }
-
-                    form.classList.add('was-validated');
                 }, false);
             });
         }, false);
@@ -222,6 +223,7 @@ include("inc/header.php");
             frmCity.website.setCustomValidity('请至少输入一项内容!');
         } else {
             frmCity.website.setCustomValidity('');
+            $('#frmCity').removeClass("was-validated");
         }
     });
 

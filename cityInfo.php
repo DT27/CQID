@@ -5,7 +5,7 @@
  * Author: DT27 <https://dt27.org>
  * @2019-11-08 22:12:12
  */
-require_once('import.php');
+require_once('api/import.php');
 $title = "业余无线电考试报名";
 require_once __DIR__ . '/bin/Server.php';
 $city_id = !empty($_REQUEST["id"]) ? $_REQUEST["id"] : 0;

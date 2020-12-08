@@ -5,6 +5,9 @@
  * Author: DT27 <https://dt27.org>
  * @2019-08-09 17:47:00
  */
+require_once __DIR__ . '/../bin/Dotenv.php';
+Dotenv::load(__DIR__ . "/../");
+$domain = getenv("domain");
 ?>
 <footer class="text-muted py-4 lh-1 bg-white">
     <div class="container">
@@ -14,7 +17,7 @@
                 业余无线电台操作技术能力模拟考试平台
             </div>
         </div>
-        <div class="text-center mt-3">© 2019 - <a href="https://dt27.org" target="_blank">DT27</a> <br>
+        <div class="text-center mt-3">©2019-<?php echo date("Y") ?> <a href="https://dt27.org" target="_blank">DT27</a> <br>
             <a href="https://github.com/DT27/CQID/issues" target="_blank" class="ml-3">
                 <small>意见/反馈</small>
             </a> <br>
@@ -47,7 +50,7 @@
         var user = Cookies.getJSON("cqid");
         if (user && user.name) {
             user["act"] = "logout";
-                Cookies.remove('cqid', {path: '/', domain: '.cqid.cn'})
+                Cookies.remove('cqid', {path: '/', domain: "<?php echo $domain; ?>"})
             $.ajax({
                 type: "post",
                 dataType: "json",

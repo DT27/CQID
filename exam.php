@@ -6,13 +6,16 @@
  * @2019-08-07 09:33:30
  */
 
-require_once('import.php');
+require_once __DIR__ . '/api/import.php';
+require_once __DIR__ . '/bin/Dotenv.php';
+Dotenv::load(__DIR__ . "/");
+$domain = getenv("domain");
 if (empty($_REQUEST['type'])) {
-    setcookie("cqid_type", "", time() - 3600, "/", ".cqid.cn");
+    setcookie("cqid_type", "", time() - 3600, "/", $domain);
 } else {
     $type = $_REQUEST['type'];
     $expire = time() + 3600 * 24 * 60;
-    setcookie("cqid_type", $type, $expire, "/", ".cqid.cn");
+    setcookie("cqid_type", $type, $expire, "/", $domain);
 }
 
 

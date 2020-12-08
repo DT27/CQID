@@ -7,7 +7,7 @@
  */
 
 require_once __DIR__ . '/../bin/Server.php';
-require_once('../import.php');
+require_once('import.php');
 
 $response = array('status' => '0', 'msg' => 'failed', 'data' => '');
 
