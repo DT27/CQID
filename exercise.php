@@ -75,7 +75,7 @@ include("inc/header.php");
                             <span class="text-success mr-1"><?php echo $q['index'] + 1 . '/' . $qsNum; ?></span><?php
                             echo $q['Q'];
                             if (isset($q["P"])) {
-                                echo "<div><img class='img-thumbnail' style='max-width:20rem;' src='./source/总题库附图(v140331)/" . $q["P"] . "'></div>";
+                                echo "<div><img class='img-thumbnail' style='max-width:20rem;' src='../source/总题库附图(v140331)/" . $q["P"] . "'></div>";
                             }
                             ?>
                         </p>

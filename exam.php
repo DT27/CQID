@@ -284,7 +284,7 @@ include("inc/header.php");
                 var qs = JSON.parse(localStorage.getItem("qs" + type));
                 var qHtml = '<span class="text-success mr-1">' + (as["index"] + 1) + '/' + count(qs) + '</span>' + as.Q;
                 if (as.P) {
-                    qHtml += "<div><img class='img-thumbnail' style='max-width:20rem;' src='./source/总题库附图(v140331)/" + as.P + "'></div>";
+                    qHtml += "<div><img class='img-thumbnail' style='max-width:20rem;' src='../source/总题库附图(v140331)/" + as.P + "'></div>";
                 }
 
                 $("#q").html(qHtml);
