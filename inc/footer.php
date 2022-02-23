@@ -12,19 +12,17 @@ $domain = getenv("domain");
 <footer class="text-muted py-4 lh-1 bg-white">
     <div class="container">
         <div class="row">
-            <div class="col-md">最新题库版本：<a href="http://www.crac.org.cn/?page_id=4274" target="_blank">v171031</a></div>
+            <div class="col-md">最新题库版本：<a href="http://www.crac.org.cn/News/Detail?ID=3dbd1bc7f36443958e1872234f42464f" target="_blank">v20211022</a></div>
             <div class="col-md text-md-right">
                 业余无线电台操作技术能力模拟考试平台
             </div>
         </div>
-        <div class="text-center mt-3">©2019-<?php echo date("Y") ?> <a href="https://dt27.org" target="_blank">DT27</a> <br>
-            <a href="https://github.com/DT27/CQID/issues" target="_blank" class="ml-3">
+        <div class="text-center mt-3 mb-5">©2019-<?php echo date("Y") ?> <a href="https://www.cqid.cn/">业余无线电模拟考试平台</a> <br>
+            <a href="https://www.cqid.cn/news/ask" target="_blank" class="ml-3">
                 <small>意见/反馈</small>
             </a> <br>
             <small>
                 <a href="http://www.beian.miit.gov.cn/" target="_blank" class="text">京ICP备13024502号-7</a></small>
-            <br>
-            <small>已运行：<span id="runTime"></span></small>
         </div>
     </div>
 </footer><!-- Modal -->
@@ -43,6 +41,116 @@ $domain = getenv("domain");
         </div>
     </div>
 </div>
+<style type="text/css">
+    @media (min-width: 768px){
+
+    }
+    .tnvk_footer {
+        display: none;
+        height: 58px;
+        line-height: 10px;
+        text-align: center;
+        border: 1px solid rgba(255, 255, 255, 100);
+        background: #fff;
+        position: fixed;
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
+        z-index: 3;
+        border-top: solid 1px #f5f5f5;
+    }
+
+    .tnvk_footer .tnvk_f_item {
+        flex: 1;
+        padding-top: 10px;
+        box-sizing: border-box;
+    }
+
+    .tnvk_footer .tnvk_f_item span {
+        font-family: SourceHanSansSC;
+        font-weight: 400;
+        font-size: 12px;
+        color: rgb(16, 16, 16);
+        font-style: normal;
+        letter-spacing: 0px;
+        line-height: 18px;
+        text-decoration: none;
+        display: block;
+    }
+
+    .tnvk_footer .active span {
+        font-family: SourceHanSansSC;
+        font-weight: 400;
+        font-size: 12px;
+        color: rgba(0, 132, 255, 1);
+        font-style: normal;
+        letter-spacing: 0px;
+        line-height: 18px;
+        text-decoration: none;
+        display: block;
+    }
+
+    .tnvk_footer .tnvk_icon {
+        width: 24px;
+        height: 24px;
+    }
+
+    .tnvk_footer .addplus {
+        width: 26px;
+        height: 32px;
+        line-height: 36px;
+        border-radius: 5px;
+        background-color: rgba(0, 132, 255, 100);
+        text-align: center;
+        border: 1px solid rgba(255, 255, 255, 100);
+        margin: 0 auto;
+    }
+
+    @media (max-width:768px) {
+        .tnvk_footer {
+            display: flex;
+        }
+    }
+    #to_top {
+        display: none;
+        position: fixed;
+        width: 3rem;
+        height: 3rem;
+        right: 1rem;
+        bottom: 8rem;
+        background: url(https://static.cqid.cn/css/fronze/css/images/backtop.png) no-repeat top center;
+        background-size: 3rem;
+        z-index: 89;
+    }
+</style>
+<div class="tnvk_footer">
+    <div
+        class="tnvk_f_item<?php echo $title == "" ? " active" : ""; ?>">
+        <a href="https://www.cqid.cn/"><img class="tnvk_icon" src="https://static.cqid.cn/css/fronze/css/svg/home<?php echo $title == "" ? "_active" : ""; ?>.svg"><span>首页</span>
+        </a>
+    </div>
+    <div
+        class="tnvk_f_item<?php echo $title == "刷题" ? " active" : ""; ?>">
+        <a href="https://www.cqid.cn/exercise/"><img class="tnvk_icon" src="https://static.cqid.cn/css/fronze/css/svg/shuati<?php echo $title == "刷题" ? "_active" : ""; ?>.svg"><span>刷题</span>
+        </a>
+    </div>
+    <div class="tnvk_f_item<?php echo $title == "模拟考试" ? " active" : ""; ?>">
+        <a href="https://www.cqid.cn/exam/"><img class="tnvk_icon" src="https://static.cqid.cn/css/fronze/css/svg/kaoshi<?php echo $title == "模拟考试" ? "_active" : ""; ?>.svg">
+            <span>模拟考试</span>
+        </a>
+    </div>
+    <div
+        class="tnvk_f_item">
+        <a href="https://www.cqid.cn/news/article"><img class="tnvk_icon" src="https://static.cqid.cn/css/fronze/css/svg/zixun.svg"><span>资讯</span>
+        </a>
+    </div>
+    <div class="tnvk_f_item">
+        <a href="https://www.cqid.cn/news/user/score.html"><img class="tnvk_icon" src="https://static.cqid.cn/css/fronze/css/svg/my.svg"><span>我的</span>
+        </a>
+    </div>
+</div>
+
+<div id="to_top"></div>
 <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
 <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script>
@@ -56,12 +164,25 @@ $domain = getenv("domain");
                 dataType: "json",
                 url: "/api/user/",
                 data: user,
+                async: false,
                 success: function () {
-                    $("#msg-body").addClass("alert-info").text('已退出，即将跳转到首页');
-                    $("#msg").modal('show');
-                    setTimeout(function () {
-                        location.href = "/"
-                    }, 3000);
+                  $.ajax({
+                    type:"GET",
+                    url:"https://www.cqid.cn/news/?api_user/loginoutapi",
+                    async: false,
+                    xhrFields: {
+                      withCredentials: true //跨域携带cookies
+                    },
+                    crossDomain: true,
+                    datatype: "text",
+                    success:function(data){
+                      $("#msg-body").addClass("alert-info").text('已退出，即将跳转到首页');
+                      $("#msg").modal('show');
+                      location.href = "/";
+                    },
+                    error: function(){
+                    }
+                  });
                 }
             });
         }
@@ -79,31 +200,50 @@ $domain = getenv("domain");
                     if (result.status) {
                         $("#user-center").html('<a href="/user/" class="nav-link">' + user.name + '</a> <a href="javascript:logout();"  class="nav-link">退出</a>');
                     } else {
-                        $("#user-center").html('<a class="nav-link" href="/login/" title="登录">登录</a> <a class="nav-link" href="/signup/" title="注册">注册</a>');
+                        $("#user-center").html('<a class="nav-link" href="/login/" title="登录">登录</a> <a class="nav-link" href="https://www.cqid.cn/news/user/register.html" title="注册">注册</a>');
                     }
                 },
                 error: function () {
-                    $("#user-center").html('<a class="nav-link" href="/login/" title="登录">登录</a> <a class="nav-link" href="/signup/" title="注册">注册</a>');
+                    $("#user-center").html('<a class="nav-link" href="/login/" title="登录">登录</a> <a class="nav-link" href="https://www.cqid.cn/news/user/register.html" title="注册">注册</a>');
                 }
             })
         } else {
-            $("#user-center").html('<a class="nav-link" href="/login/" title="登录">登录</a> <a class="nav-link" href="/signup/" title="注册">注册</a>');
+          var user = Cookies.getJSON("whatsnsauth");
+          if (user) {
+              $("#user-center").html('<a class="nav-link" href="https://www.cqid.cn/news/user/default.html" title="用户中心">用户中心</a>');
+          }else{
+            $("#user-center").html('<a class="nav-link" href="/login/" title="登录">登录</a> <a class="nav-link" href="https://www.cqid.cn/news/user/register.html" title="注册">注册</a>');
+          }
+        }
+        var p=0,t=0;
+        var oTop = document.getElementById("to_top");
+        var screenw = document.documentElement.clientWidth || document.body.clientWidth;
+        var screenh = document.documentElement.clientHeight || document.body.clientHeight;
+        $(window).scroll(function(e){
+            p = $(this).scrollTop();
+            var scrolltop = document.documentElement.scrollTop || document.body.scrollTop;
+            if(scrolltop<=screenh){
+                oTop.style.display="none";
+            }else{
+                oTop.style.display="block";
+            }
+            if(t<=p){//下滚
+                if(scrolltop>50){
+                    $(".nav_top").hide();
+                }
+
+            }
+
+            else{//上滚
+                $(".nav_top").show();
+
+            }
+            setTimeout(function(){t = p;},0);
+        });
+        oTop.onclick = function(){
+            document.documentElement.scrollTop = document.body.scrollTop =0;
         }
 
-
-        //计算网站运行时间
-        var date1 = '2019-08-06 18:27:00';  //开始时间
-        var date2 = new Date(); //结束时间
-        var date3 = date2.getTime() - new Date(date1).getTime();    //时间差的毫秒数
-        //计算出相差天数
-        var days = Math.floor(date3 / (24 * 3600 * 1000))
-        //计算出小时数
-        var leave1 = date3 % (24 * 3600 * 1000)    //计算天数后剩余的毫秒数
-        var hours = Math.floor(leave1 / (3600 * 1000))
-        //计算相差分钟数
-        var leave2 = leave1 % (3600 * 1000)        //计算小时数后剩余的毫秒数
-        var minutes = Math.floor(leave2 / (60 * 1000))
-        $("#runTime").text(days + "天 " + hours + "小时 " + minutes + " 分钟");
     })
 </script>
 <script>

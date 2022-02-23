@@ -16,10 +16,10 @@ function del($var)
     return (trim($var));
 }
 
-$allQ = getAllQ($_SERVER['DOCUMENT_ROOT'] . '/source/总题库文件(v171031).txt');
-$aQNum = getAQNum($_SERVER['DOCUMENT_ROOT'] . '/source/A_试卷涉及题号(v170717).txt');
-$bQNum = getAQNum($_SERVER['DOCUMENT_ROOT'] . '/source/B_试卷涉及题号(v170717).txt');
-$cQNum = getAQNum($_SERVER['DOCUMENT_ROOT'] . '/source/C_试卷涉及题号(v170717).txt');
+$allQ = getAllQ($_SERVER['DOCUMENT_ROOT'] . '/source/TXT题库包(v20211022)/总题库(v20211022).txt');
+$aQNum = getAQNum($_SERVER['DOCUMENT_ROOT'] . '/source/TXT题库包(v20211022)/A_试卷涉及题号(v20211022).txt');
+$bQNum = getAQNum($_SERVER['DOCUMENT_ROOT'] . '/source/TXT题库包(v20211022)/B_试卷涉及题号(v20211022).txt');
+$cQNum = getAQNum($_SERVER['DOCUMENT_ROOT'] . '/source/TXT题库包(v20211022)/C_试卷涉及题号(v20211022).txt');
 
 /**
  *获取所有题库
@@ -50,7 +50,7 @@ function getAllQ($allqfile)
                 $content[$num]['C'] = substr($str, 3);
             } elseif (strpos($str, '[D]') !== false) {
                 $content[$num]['D'] = substr($str, 3);
-            } elseif (strpos($str, '[P]') !== false) {
+            } elseif (strpos($str, '[P]') !== false && substr($str, 3) !=='') {
                 $content[$num]['P'] = substr($str, 3);
             } elseif (strpos($str, '[X]') !== false) {
                 $content[$num]['X'] = substr($str, 3);

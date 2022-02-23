@@ -13,15 +13,16 @@
     <meta name="theme-color" content="#1283DA">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <link rel="icon" sizes="192x192" href="/images/logo_192.png">
-    <title><?php echo $title ? $title . " - " : ""; ?>业余无线电考试|业余电台操作证书模拟考试</title>
-    <meta name="description" content="<?php echo $description ? $description : ""; ?>业余无线电台操作证书模拟考试"/>
-    <meta name="keywords"
-          content="<?php echo $keywords ? $keywords: ""; ?>业余无线电考试,业余无线电,业余电台,业余无线电模拟考试,业余无线电证书,业余无线电台操作证书,无线电题库"/>
+    <title><?php isset($title) ? ($title . " - ") : ""; ?>业余无线电考试|业余电台操作证书模拟考试</title>
+    <meta name="description" content="<?php isset($description) ? $description : ""; ?>业余无线电台操作证书模拟考试"/>
+    <meta name="keywords" content="<?php isset($keywords) ? $keywords: ""; ?>业余无线电考试,业余无线电,业余电台,业余无线电模拟考试,业余无线电证书,业余无线电台操作证书,无线电题库"/>
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/main.css">
     <script src="https://cdn.staticfile.org/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/js-cookie/2.2.1/js.cookie.min.js"></script>
     <script src="https://cdn.staticfile.org/twbs-pagination/1.4.2/jquery.twbsPagination.min.js"></script>
+    <script data-ad-client="ca-pub-6756415375138735" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
 </head>
 <body>
 <header>
@@ -46,9 +47,12 @@
                     <li class="nav-item<?php echo $title == "模拟考试" ? " active" : ""; ?>">
                         <a class="nav-link" title="业余无线电模拟考试" href="/exam/">模拟考试</a>
                     </li>
-                    <li class="nav-item<?php echo $title == "业余无线电考试报名" ? " active" : ""; ?>">
-                        <a class="nav-link" title="业余无线电考试报名" href="/city/">各地区考试报名</a>
-                    </li>
+                  <li class="nav-item">
+                  <a class="nav-link" href="https://www.cqid.cn/news/article">各地考试信息</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="https://www.cqid.cn/news/ask">提问</a>
+                  </li>
                 </ul>
                 <div class="navbar-nav" id="user-center"></div>
             </div>

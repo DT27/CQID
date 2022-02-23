@@ -11,7 +11,7 @@ include("inc/header.php");
 ?>
     <div class="intro py-5 py-lg-5 position-relative text-white">
         <div class="bg-overlay-primary">
-            <img src="./images/W2COS.jpg" class="img-fluid img-cover" alt="W2COS">
+            <img src="https://static.cqid.cn/W2COS.jpg" class="img-fluid img-cover" alt="W2COS">
         </div>
         <div class="intro-content py-5">
             <div class="container">

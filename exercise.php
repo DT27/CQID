@@ -38,7 +38,7 @@ include("inc/header.php");
 <main class="jumbotron">
     <div class="container">
         <div class="row">
-            <div class="input-group mb-4" style="max-width: 25rem;">
+            <div class="input-group mb-2" style="max-width: 25rem;">
                 <div class="input-group-prepend">
                     <label class="input-group-text" for="qType">业余电台操作证书分类</label>
                 </div>
@@ -51,11 +51,15 @@ include("inc/header.php");
                     <option value="C"<?php echo $type == "C" ? " selected" : ""; ?>>
                         C类<?php echo " " . count($cQNum) . "题"; ?></option>
                 </select>
-                <button data-toggle="collapse" data-target="#reGAlert" aria-expanded="false" class="btn btn-link mr-n5">*
-                    </button>
             </div>
         </div>
-        <div class="form-group alert-danger collapse p-1 m-0" id="reGAlert">
+        <div class="row">
+            <div class="mb-2">
+                <button data-toggle="collapse" data-target="#reGAlert" aria-expanded="false" class="btn btn-link mr-n5">
+                    <img class="tnvk_icon" src="https://static.cqid.cn/css/fronze/css/svg/setting.svg">
+                </button></div>
+        </div>
+        <div class="form-group alert-danger collapse p-1 m-0 mb-2" id="reGAlert">
             <button class="btn btn-sm btn-primary" id="reG">清空答题记录</button>
         </div>
         <div class="text-center" id="loading">
@@ -75,7 +79,7 @@ include("inc/header.php");
                             <span class="text-success mr-1"><?php echo $q['index'] + 1 . '/' . $qsNum; ?></span><?php
                             echo $q['Q'];
                             if (isset($q["P"])) {
-                                echo "<div><img class='img-thumbnail' style='max-width:20rem;' src='./source/总题库附图(v140331)/" . $q["P"] . "'></div>";
+                                echo "<div><img class='img-thumbnail' style='max-width:20rem;' src='/source/TXT题库包(v20211022)/总题库附图(v20211022)/" . $q["P"] . "'></div>";
                             }
                             ?>
                         </p>

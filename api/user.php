@@ -61,7 +61,7 @@ if (!empty($_POST['act']) && $_POST['act'] == 'signup') {
         }
         $response['status'] = '1';
         $response['msg'] = 'success';
-        $response['data'] = array("username" => $username);
+        $response['data'] = array("username" => $username,"email"=>$user["email"],"create_date"=>$user["create_date"]);
     } else {
         $response['msg'] = '用户名或密码错误！';
     }

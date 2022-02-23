@@ -30,17 +30,24 @@ include("inc/header.php");
                 </div>
             </div>
             <div class="row">
-                <div class="text-center w-100 mb-3">
-                <p class="h2">业余电台操作证书</br>模拟考试 <span id="examType"></span>类 <button data-toggle="collapse" data-target="#reGAlert" aria-expanded="false" class="btn btn-link mr-n5">*
-                    </button></p>
+                <div class="text-center w-100 mb-2">
+                <p class="h2">业余电台操作证书</br>模拟考试 <span id="examType"></span>类</p>
 
-                    <div class="form-group alert-danger collapse p-1 m-0" id="reGAlert">
-                        <button class="btn btn-sm btn-primary" id="reG">重新生成试卷</button>
-                        <small class="text-muted">
-                            重新生成会清空已做试题。
-                        </small>
-                    </div>
+
                 </div>
+            </div>
+
+            <div class="row">
+                <div class="mb-2">
+                    <button data-toggle="collapse" data-target="#reGAlert" aria-expanded="false" class="btn btn-link mr-n5">
+                        <img class="tnvk_icon" src="https://static.cqid.cn/css/fronze/css/svg/setting.svg">
+                    </button></div>
+            </div>
+            <div class="form-group alert-danger collapse p-1 m-0 mb-2" id="reGAlert">
+                <button class="btn btn-sm btn-primary" id="reG">重新生成试卷</button>
+                <small class="text-muted">
+                    重新生成会清空已做试题。
+                </small>
             </div>
             <div class="row">
                 <div class="card mb-4 d-none w-100">
@@ -284,7 +291,7 @@ include("inc/header.php");
                 var qs = JSON.parse(localStorage.getItem("qs" + type));
                 var qHtml = '<span class="text-success mr-1">' + (as["index"] + 1) + '/' + count(qs) + '</span>' + as.Q;
                 if (as.P) {
-                    qHtml += "<div><img class='img-thumbnail' style='max-width:20rem;' src='./source/总题库附图(v140331)/" + as.P + "'></div>";
+                    qHtml += "<div><img class='img-thumbnail' style='max-width:20rem;' src='/source/TXT题库包(v20211022)/总题库附图(v20211022)/" + as.P + "'></div>";
                 }
 
                 $("#q").html(qHtml);

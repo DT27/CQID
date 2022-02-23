@@ -15,7 +15,9 @@ include("inc/header.php");
     </div>
     <div class="intro-content py-5">
         <div class="container">
-            <div class="row">
+            <div class="alert text-center">
+用户系统维护中，登录注册暂不可用，请耐心等待通知。
+              <!--
                               <div class="col-md-6 align-self-center">
                                   <h1 class="display-2 text-center pb-5 d-md-none">CQID</h1>
                                   <h2 class="display-4 text-center">CQ CQ CQ</h2>
@@ -42,6 +44,7 @@ include("inc/header.php");
                                       </div>
                                   </div>
                               </div>
+              -->
                           </div>
                       </div>
                   </div>
@@ -53,8 +56,6 @@ include("inc/header.php");
         PUBLIC_KEY = JSON.parse(result).data.public_key;
     });
     function login() {
-      var _uname=$("#username").val();
-      var _upwd=$("#password").val();
         var crypt = new JSEncrypt();
         crypt.setPublicKey(PUBLIC_KEY);
         var cry_pass = crypt.encrypt($("#password").val());
@@ -62,78 +63,23 @@ include("inc/header.php");
         $("#password").val(cry_pass);
 
 
+
+      var _uname=$("#username").val();
+      var _upwd=$("#password").val();
+
       /**
-       * 判断是否新系统用户
+       * 原登录方法
        */
       $.ajax({
         type: "post",
-        dataType: "json",
-        async: false,
-        url: "https://www.cqid.cn/news/user/ajaxusername.html",
-        data: {username: _uname},
-        success: function (flag) {
-          if (-1 == flag) {
-            //此用户名已经存在，直接新系统登录
-            $.ajax({
-              type:"POST",
-              async: false,
-              xhrFields: {
-                withCredentials: true //跨域携带cookies
-              },
-              crossDomain: true,
-              url:"https://www.cqid.cn/news/?api_user/loginapi",
-              data:{uname:_uname,upwd:_upwd,apikey:0},
-              datatype: "text",//"xml", "html", "script", "json", "jsonp", "text".
-              success:function(data){
-                data=$.trim(data);
-                console.log(data)
-                if(data.indexOf('ok|')>=0){
-                  var datastrs=data.split('|');
-                  $("body").append(datastrs);
-                  data='login_ok';
-                }
-                if(data=='login_ok'){
-                  window.location.href="https://www.cqid.cn/";
-                }else{
-                  switch(data){
-                    case 'login_null':
-                      alert("用户名或者密码为空");
-                      break;
-                    case 'login_user_or_pwd_error':
-                      alert("用户名或者密码错误");
-                      break;
-                    default:
-                      alert(data);
-                      break;
-                  }
-                }
-              }   ,
-              complete: function () {
-              },
-              error: function (msg) {
-                console.log(msg);
-                $("#msg-body").addClass("alert-error").text(msg);
-                $("#msg").modal('show');
-              }
-            });
-
-
-          } else if (-2 == flag) {
-            //用户名含有禁用字符
-          } else {
-            /**
-             * 原登录方法
-             */
-            $.ajax({
-              type: "post",
-              dataType: "json",
-              async: false,
-              url: "/api/user/",
-              data: $('#loginForm').serialize(),
-              success: function (result) {
+            dataType: "json",
+            async: false,
+            url: "/api/user/",
+            data: $('#loginForm').serialize(),
+            success: function (result) {
                 if (result.status == 1) {
-                  //console.log(Cookies.getJSON("cqid"));
-                  //console.log(PHPCookies.read());
+                    //console.log(Cookies.getJSON("cqid"));
+                    //console.log(PHPCookies.read());
 
                   /**
                    * 判断是否新系统用户
@@ -147,48 +93,6 @@ include("inc/header.php");
                     success: function (flag) {
                       if (-1 == flag) {
                         //此用户名已经存在，直接新系统登录
-                        $.ajax({
-                          type:"POST",
-                          async: false,
-                          xhrFields: {
-                            withCredentials: true //跨域携带cookies
-                          },
-                          crossDomain: true,
-                          url:"https://www.cqid.cn/news/?api_user/loginapi",
-                          data:{uname:_uname,upwd:_upwd,apikey:0},
-                          datatype: "text",//"xml", "html", "script", "json", "jsonp", "text".
-                          success:function(data){
-                            data=$.trim(data);
-                            console.log(data)
-                            if(data.indexOf('ok|')>=0){
-                              var datastrs=data.split('|');
-                              $("body").append(datastrs);
-                              data='login_ok';
-                            }
-                            if(data=='login_ok'){
-                              window.location.href="https://www.cqid.cn/";
-                            }else{
-                              switch(data){
-                                case 'login_null':
-                                  alert("用户名或者密码为空");
-                                  break;
-                                case 'login_user_or_pwd_error':
-                                  alert("用户名或者密码错误");
-                                  break;
-                                default:
-                                  alert(data);
-                                  break;
-                              }
-                            }
-                          },
-                          error: function (msg) {
-                            console.log(msg);
-                            $("#msg-body").addClass("alert-error").text(msg);
-                            $("#msg").modal('show');
-                          }
-                        });
-
-
                       } else if (-2 == flag) {
                         //用户名含有禁用字符
                       } else {
@@ -196,21 +100,18 @@ include("inc/header.php");
                         /**
                          * 注册开始 登录时直接在新系统中注册
                          */
+                        var _rupwd=_upwd;
                         var _code="noCode";
                         var _email=result.data.email;
-                        var _data={uname:_uname,upwd:_upwd,rupwd:_upwd,email:_email,frominvatecode:"",apikey:"",seccode_verify:_code};
+                        var _data={uname:_uname,upwd:_upwd,rupwd:_rupwd,email:_email,frominvatecode:_frominvatecode,apikey:_apikey,seccode_verify:_code};
                         $.ajax({
                           type:"POST",
                           async: false,
-                          xhrFields: {
-                            withCredentials: true //跨域携带cookies
-                          },
-                          crossDomain: true,
                           url:"https://www.cqid.cn/news/api_user/registerapi.html",
                           data:_data,
                           datatype: "text",//"xml", "html", "script", "json", "jsonp", "text".
                           beforeSend: function () {
-                            $("#msg-body").addClass("alert-info").text('用户授权中……');
+                            $("#msg-body").addClass("alert-info").text('登录授权中……');
                             $("#msg").modal('show');
                           },
                           //成功返回之后调用的函数
@@ -240,25 +141,18 @@ include("inc/header.php");
                     }
                   });
 
+
+
+
                 } else {
-                  $("#msg-body").addClass("alert-danger").text(result.msg);
-                  $("#msg").modal('show');
+                    $("#msg-body").addClass("alert-danger").text(result.msg);
+                    $("#msg").modal('show');
                 }
-              },
-              error: function (msg) {
+            },
+            error: function (msg) {
                 console.log(msg);
-              }
-            });
-          }
-        },
-        error: function (msg) {
-          console.log(msg);
-          $("#msg-body").addClass("alert-error").text(msg);
-          $("#msg").modal('show');
-        }
-      });
-
-
+            }
+        });
     }
     $(function () {
         window.addEventListener('load', function () {

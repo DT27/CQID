@@ -17,7 +17,9 @@ include("inc/header.php");
     <div class="intro-content py-5">
         <div class="container">
 
-          <div class="row">
+          <div class="alert text-center">
+            用户系统维护中，登录注册暂不可用，请耐心等待通知。
+            <!--
                 <div class="col-md-6 align-self-center">
                     <h1 class="display-2 text-center pb-5 d-md-none">CQID</h1>
                     <h2 class="display-4 text-center">CQ CQ CQ</h2>
@@ -56,6 +58,7 @@ include("inc/header.php");
                         </div>
                     </div>
                 </div>
+                -->
             </div>
         </div>
     </div>
